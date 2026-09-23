@@ -4,49 +4,441 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>XYZMOVIEDAILY</title>
+
+  <title>XYZMOVIEDAILY | Bollywood Movies & News</title>
+
+  <meta
+    name="description"
+    content="XYZMOVIEDAILY - Bollywood movies, latest entertainment news, reviews and updates."
+  >
+
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-  <header>
-    <h1>XYZMOVIEDAILY</h1>
-    <p>Movie Website</p>
+  <!-- HEADER -->
+  <header class="top-header">
+
+    <div class="container header-content">
+
+      <a href="#" class="logo">
+        XYZ<span>MOVIE</span>DAILY
+      </a>
+
+      <div class="search-box">
+
+        <input
+          type="search"
+          id="searchInput"
+          placeholder="Search movies..."
+          autocomplete="off"
+        >
+
+        <button id="searchButton">
+          Search
+        </button>
+
+      </div>
+
+    </div>
+
   </header>
 
-  <main>
 
-    <section class="movies">
+  <!-- NAVIGATION -->
+  <nav class="navbar">
 
-      <article class="movie-card">
+    <div class="container nav-content">
 
-        <img
-          src="https://placehold.co/600x900/111111/ffffff?text=Movie+Poster"
-          alt="Movie Poster"
-        >
+      <a href="#" class="active">Home</a>
+      <a href="#trending">Trending</a>
+      <a href="#movies">Movies</a>
+      <a href="#news">News</a>
+      <a href="#reviews">Reviews</a>
 
-        <h2>Test Movie</h2>
+    </div>
 
-        <p>2025 • Action</p>
+  </nav>
 
-        <a
-          href="https://www.youtube.com/results?search_query=official+movie+trailer"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          ▶ Watch Trailer
+
+  <!-- MAIN -->
+  <main class="container">
+
+
+    <!-- HERO -->
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <span class="tag">
+          XYZMOVIEDAILY
+        </span>
+
+        <h1>
+          Your Daily Dose of Bollywood
+        </h1>
+
+        <p>
+          Latest movies, entertainment news,
+          reviews and everything Bollywood.
+        </p>
+
+        <a href="#trending" class="hero-button">
+          Explore Movies
         </a>
 
-      </article>
+      </div>
 
     </section>
 
+
+    <!-- TRENDING MOVIES -->
+    <section id="trending" class="section">
+
+      <div class="section-heading">
+
+        <div>
+          <span class="section-label">
+            TRENDING
+          </span>
+
+          <h2>
+            Trending Movies
+          </h2>
+        </div>
+
+        <span class="movie-count" id="movieCount">
+          0 Movies
+        </span>
+
+      </div>
+
+
+      <div
+        class="movie-grid"
+        id="movieList"
+      ></div>
+
+
+      <div
+        class="no-results"
+        id="noResults"
+        hidden
+      >
+        <h3>No movies found</h3>
+
+        <p>
+          Try another movie name or genre.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- MOVIES -->
+    <section id="movies" class="section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <span class="section-label">
+            DISCOVER
+          </span>
+
+          <h2>
+            Movie Categories
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <div class="category-grid">
+
+        <a href="#trending" class="category-card">
+          <span>🎬</span>
+          <h3>Bollywood</h3>
+          <p>Latest Hindi movies</p>
+        </a>
+
+        <a href="#trending" class="category-card">
+          <span>🔥</span>
+          <h3>Trending</h3>
+          <p>What's popular right now</p>
+        </a>
+
+        <a href="#reviews" class="category-card">
+          <span>⭐</span>
+          <h3>Reviews</h3>
+          <p>Movie reviews and ratings</p>
+        </a>
+
+        <a href="#news" class="category-card">
+          <span>📰</span>
+          <h3>Entertainment</h3>
+          <p>Latest Bollywood news</p>
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- NEWS -->
+    <section id="news" class="section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <span class="section-label">
+            NEWS
+          </span>
+
+          <h2>
+            Latest Bollywood News
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <div class="news-grid">
+
+
+        <article class="news-card featured-news">
+
+          <div class="news-placeholder">
+            🎬
+          </div>
+
+          <div class="news-content">
+
+            <span class="news-tag">
+              MOVIES
+            </span>
+
+            <h3>
+              Latest Bollywood movie updates
+            </h3>
+
+            <p>
+              Stay updated with movie announcements,
+              trailers, release information and
+              entertainment stories.
+            </p>
+
+            <a href="#">
+              Read Story →
+            </a>
+
+          </div>
+
+        </article>
+
+
+        <article class="news-card">
+
+          <div class="news-content">
+
+            <span class="news-tag">
+              ENTERTAINMENT
+            </span>
+
+            <h3>
+              Bollywood entertainment updates
+            </h3>
+
+            <p>
+              Discover the latest entertainment
+              stories and movie updates.
+            </p>
+
+            <a href="#">
+              Read Story →
+            </a>
+
+          </div>
+
+        </article>
+
+
+        <article class="news-card">
+
+          <div class="news-content">
+
+            <span class="news-tag">
+              UPCOMING
+            </span>
+
+            <h3>
+              Upcoming movies to watch
+            </h3>
+
+            <p>
+              Explore upcoming films and
+              important movie updates.
+            </p>
+
+            <a href="#">
+              Read Story →
+            </a>
+
+          </div>
+
+        </article>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- REVIEWS -->
+    <section id="reviews" class="section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <span class="section-label">
+            REVIEWS
+          </span>
+
+          <h2>
+            Latest Reviews
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <div class="review-grid">
+
+
+        <article class="review-card">
+
+          <div class="review-score">
+            ★ 8.5
+          </div>
+
+          <h3>
+            Movie Review
+          </h3>
+
+          <p>
+            Read our latest movie review,
+            story overview and audience response.
+          </p>
+
+          <a href="#">
+            Read Review →
+          </a>
+
+        </article>
+
+
+        <article class="review-card">
+
+          <div class="review-score">
+            ★ 7.8
+          </div>
+
+          <h3>
+            Bollywood Review
+          </h3>
+
+          <p>
+            Discover what audiences are saying
+            about the latest release.
+          </p>
+
+          <a href="#">
+            Read Review →
+          </a>
+
+        </article>
+
+
+        <article class="review-card">
+
+          <div class="review-score">
+            ★ 8.1
+          </div>
+
+          <h3>
+            Latest Release
+          </h3>
+
+          <p>
+            Get movie details, cast information
+            and review updates.
+          </p>
+
+          <a href="#">
+            Read Review →
+          </a>
+
+        </article>
+
+
+      </div>
+
+    </section>
+
+
   </main>
 
+
+  <!-- FOOTER -->
   <footer>
-    <p>© 2026 XYZMOVIEDAILY</p>
+
+    <div class="container footer-content">
+
+      <div>
+
+        <div class="footer-logo">
+          XYZMOVIEDAILY
+        </div>
+
+        <p>
+          Your daily destination for Bollywood
+          movies and entertainment.
+        </p>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <a href="#">Home</a>
+        <a href="#trending">Movies</a>
+        <a href="#news">News</a>
+        <a href="#reviews">Reviews</a>
+
+      </div>
+
+    </div>
+
+
+    <div class="copyright">
+
+      © <span id="year"></span>
+      XYZMOVIEDAILY.
+      All rights reserved.
+
+    </div>
+
   </footer>
+
+
+  <script src="app.js"></script>
 
 </body>
 </html>
