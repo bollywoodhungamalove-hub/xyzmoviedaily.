@@ -1,25 +1,29 @@
 ```javascript
 /* =========================================================
    XYZMOVIEDAILY
-   Simple version - NO TMDB API
+   Poster-fix version
+   No TMDB
+   No API key
+   No external poster images
    ========================================================= */
 
 
-/* ================= MOVIE DATA ================= */
+/* =========================================================
+   MOVIE DATA
+   ========================================================= */
 
 const movies = [
-
   {
     title: "Dhurandhar",
     year: "2025",
     genre: "Action • Thriller",
     rating: "8.5",
-    poster:
-      "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=600&q=80",
-    description:
-      "An action thriller filled with suspense, drama and powerful characters.",
+    color1: "#8b0000",
+    color2: "#111111",
     trailer:
-      "https://www.youtube.com/results?search_query=Dhurandhar+official+trailer"
+      "https://www.youtube.com/results?search_query=Dhurandhar+official+trailer",
+    description:
+      "An action thriller filled with suspense, drama and powerful characters."
   },
 
   {
@@ -27,12 +31,12 @@ const movies = [
     year: "2025",
     genre: "Action • Spy",
     rating: "8.2",
-    poster:
-      "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=600&q=80",
-    description:
-      "An action-packed spy adventure featuring missions, combat and high-stakes drama.",
+    color1: "#143d59",
+    color2: "#050505",
     trailer:
-      "https://www.youtube.com/results?search_query=War+2+official+trailer"
+      "https://www.youtube.com/results?search_query=War+2+official+trailer",
+    description:
+      "An action-packed spy adventure featuring missions, combat and high-stakes drama."
   },
 
   {
@@ -40,12 +44,12 @@ const movies = [
     year: "2025",
     genre: "Action • Drama",
     rating: "8.0",
-    poster:
-      "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=600&q=80",
-    description:
-      "A stylish action drama packed with powerful characters and explosive moments.",
+    color1: "#7b3f00",
+    color2: "#100c08",
     trailer:
-      "https://www.youtube.com/results?search_query=Coolie+official+trailer"
+      "https://www.youtube.com/results?search_query=Coolie+official+trailer",
+    description:
+      "A stylish action drama packed with powerful characters and explosive moments."
   },
 
   {
@@ -53,12 +57,12 @@ const movies = [
     year: "2025",
     genre: "Comedy",
     rating: "7.6",
-    poster:
-      "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=600&q=80",
-    description:
-      "A comedy entertainer filled with characters, confusion, twists and fun.",
+    color1: "#5b2c83",
+    color2: "#160b20",
     trailer:
-      "https://www.youtube.com/results?search_query=Housefull+5+official+trailer"
+      "https://www.youtube.com/results?search_query=Housefull+5+official+trailer",
+    description:
+      "A comedy entertainer filled with characters, confusion, twists and fun."
   },
 
   {
@@ -66,12 +70,12 @@ const movies = [
     year: "2025",
     genre: "Adventure • Sci-Fi",
     rating: "8.7",
-    poster:
-      "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80",
-    description:
-      "A new adventure in the Avatar universe featuring spectacular worlds and action.",
+    color1: "#006994",
+    color2: "#06141c",
     trailer:
-      "https://www.youtube.com/results?search_query=Avatar+Fire+and+Ash+official+trailer"
+      "https://www.youtube.com/results?search_query=Avatar+Fire+and+Ash+official+trailer",
+    description:
+      "A new adventure in the Avatar universe featuring spectacular worlds and action."
   },
 
   {
@@ -79,12 +83,12 @@ const movies = [
     year: "2025",
     genre: "Action • Superhero",
     rating: "8.1",
-    poster:
-      "https://images.unsplash.com/photo-1534801022022-6e5a8f7f5b4f?auto=format&fit=crop&w=600&q=80",
-    description:
-      "A superhero adventure following Superman as he protects his world.",
+    color1: "#174ea6",
+    color2: "#07152f",
     trailer:
-      "https://www.youtube.com/results?search_query=Superman+2025+official+trailer"
+      "https://www.youtube.com/results?search_query=Superman+2025+official+trailer",
+    description:
+      "A superhero adventure following Superman as he protects his world."
   },
 
   {
@@ -92,12 +96,12 @@ const movies = [
     year: "2025",
     genre: "Action • Sci-Fi",
     rating: "8.0",
-    poster:
-      "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?auto=format&fit=crop&w=600&q=80",
-    description:
-      "A superhero team faces extraordinary challenges while protecting their world.",
+    color1: "#176b87",
+    color2: "#071316",
     trailer:
-      "https://www.youtube.com/results?search_query=Fantastic+Four+2025+official+trailer"
+      "https://www.youtube.com/results?search_query=Fantastic+Four+2025+official+trailer",
+    description:
+      "A superhero team faces extraordinary challenges while protecting their world."
   },
 
   {
@@ -105,18 +109,234 @@ const movies = [
     year: "2025",
     genre: "Action • Adventure",
     rating: "8.4",
-    poster:
-      "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=600&q=80",
-    description:
-      "An elite team faces a dangerous mission with impossible odds.",
+    color1: "#4a4a4a",
+    color2: "#050505",
     trailer:
-      "https://www.youtube.com/results?search_query=Mission+Impossible+2025+official+trailer"
+      "https://www.youtube.com/results?search_query=Mission+Impossible+2025+official+trailer",
+    description:
+      "An elite team faces a dangerous mission with impossible odds."
   }
-
 ];
 
 
-/* ================= ELEMENTS ================= */
+/* =========================================================
+   CREATE POSTER
+   ========================================================= */
+
+function createPoster(movie) {
+
+  const titleParts =
+    movie.title.split(" ");
+
+  let line1 = "";
+  let line2 = "";
+
+  if (titleParts.length <= 2) {
+
+    line1 = movie.title;
+
+  } else {
+
+    const middle =
+      Math.ceil(titleParts.length / 2);
+
+    line1 =
+      titleParts.slice(0, middle).join(" ");
+
+    line2 =
+      titleParts.slice(middle).join(" ");
+
+  }
+
+
+  const svg = `
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="600"
+      height="900"
+      viewBox="0 0 600 900"
+    >
+
+      <defs>
+
+        <linearGradient
+          id="bg"
+          x1="0"
+          y1="0"
+          x2="1"
+          y2="1"
+        >
+
+          <stop
+            offset="0%"
+            stop-color="${movie.color1}"
+          />
+
+          <stop
+            offset="100%"
+            stop-color="${movie.color2}"
+          />
+
+        </linearGradient>
+
+        <radialGradient
+          id="glow"
+          cx="50%"
+          cy="35%"
+          r="60%"
+        >
+
+          <stop
+            offset="0%"
+            stop-color="white"
+            stop-opacity=".20"
+          />
+
+          <stop
+            offset="100%"
+            stop-color="white"
+            stop-opacity="0"
+          />
+
+        </radialGradient>
+
+      </defs>
+
+
+      <rect
+        width="600"
+        height="900"
+        fill="url(#bg)"
+      />
+
+
+      <circle
+        cx="300"
+        cy="300"
+        r="280"
+        fill="url(#glow)"
+      />
+
+
+      <circle
+        cx="300"
+        cy="330"
+        r="150"
+        fill="none"
+        stroke="white"
+        stroke-opacity=".15"
+        stroke-width="3"
+      />
+
+
+      <circle
+        cx="300"
+        cy="330"
+        r="105"
+        fill="none"
+        stroke="white"
+        stroke-opacity=".12"
+        stroke-width="2"
+      />
+
+
+      <text
+        x="300"
+        y="80"
+        text-anchor="middle"
+        fill="white"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="22"
+        font-weight="bold"
+        letter-spacing="5"
+      >
+        XYZMOVIEDAILY
+      </text>
+
+
+      <text
+        x="300"
+        y="625"
+        text-anchor="middle"
+        fill="white"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="46"
+        font-weight="900"
+      >
+        ${escapeSvg(line1)}
+      </text>
+
+
+      ${
+        line2
+          ? `
+            <text
+              x="300"
+              y="680"
+              text-anchor="middle"
+              fill="white"
+              font-family="Arial, Helvetica, sans-serif"
+              font-size="42"
+              font-weight="900"
+            >
+              ${escapeSvg(line2)}
+            </text>
+          `
+          : ""
+      }
+
+
+      <rect
+        x="180"
+        y="735"
+        width="240"
+        height="3"
+        fill="white"
+        opacity=".7"
+      />
+
+
+      <text
+        x="300"
+        y="780"
+        text-anchor="middle"
+        fill="white"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="21"
+        font-weight="bold"
+        letter-spacing="3"
+      >
+        ${escapeSvg(movie.genre)}
+      </text>
+
+
+      <text
+        x="300"
+        y="830"
+        text-anchor="middle"
+        fill="white"
+        opacity=".75"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="20"
+      >
+        ${escapeSvg(movie.year)}
+      </text>
+
+    </svg>
+  `;
+
+
+  return (
+    "data:image/svg+xml;charset=UTF-8," +
+    encodeURIComponent(svg)
+  );
+
+}
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
 
 const trendingGrid =
   document.getElementById("trendingGrid");
@@ -182,12 +402,16 @@ const modalTrailer =
   document.getElementById("modalTrailer");
 
 
-/* ================= MOVIE CARD ================= */
+/* =========================================================
+   CREATE MOVIE CARD
+   ========================================================= */
 
 function createMovieCard(movie, number = "") {
 
-  return `
+  const poster =
+    createPoster(movie);
 
+  return `
     <article class="movie-card">
 
       <button
@@ -200,15 +424,17 @@ function createMovieCard(movie, number = "") {
 
           <img
             class="movie-poster"
-            src="${movie.poster}"
+            src="${poster}"
             alt="${escapeAttribute(movie.title)} poster"
-            loading="lazy"
-            onerror="this.src='https://placehold.co/600x900/18181f/ffffff?text=Movie'"
           >
 
           ${
             number
-              ? `<span class="trending-number">${number}</span>`
+              ? `
+                <span class="trending-number">
+                  ${number}
+                </span>
+              `
               : ""
           }
 
@@ -228,14 +454,24 @@ function createMovieCard(movie, number = "") {
         </h3>
 
         <div class="movie-meta">
-          <span>${escapeHtml(movie.year)}</span>
+
+          <span>
+            ${escapeHtml(movie.year)}
+          </span>
+
           <span>•</span>
-          <span>⭐ ${escapeHtml(movie.rating)}</span>
+
+          <span>
+            ⭐ ${escapeHtml(movie.rating)}
+          </span>
+
         </div>
+
 
         <p class="movie-genre">
           ${escapeHtml(movie.genre)}
         </p>
+
 
         <button
           class="trailer-button"
@@ -247,12 +483,13 @@ function createMovieCard(movie, number = "") {
       </div>
 
     </article>
-
   `;
 }
 
 
-/* ================= DISPLAY MOVIES ================= */
+/* =========================================================
+   DISPLAY MOVIES
+   ========================================================= */
 
 function displayMovies(
   movieList,
@@ -262,28 +499,29 @@ function displayMovies(
 
   if (!container) return;
 
-  container.innerHTML = movieList
-    .map((movie, index) => {
 
-      const number =
-        numbered
-          ? index + 1
-          : "";
+  container.innerHTML =
+    movieList
+      .map((movie, index) => {
 
-      return createMovieCard(
-        movie,
-        number
-      );
+        return createMovieCard(
+          movie,
+          numbered
+            ? index + 1
+            : ""
+        );
 
-    })
-    .join("");
+      })
+      .join("");
 
 
   setupMovieButtons(container);
 }
 
 
-/* ================= MOVIE BUTTONS ================= */
+/* =========================================================
+   MOVIE BUTTONS
+   ========================================================= */
 
 function setupMovieButtons(container) {
 
@@ -299,14 +537,15 @@ function setupMovieButtons(container) {
       "click",
       function() {
 
-        const movieTitle =
+        const title =
           button.dataset.movie;
 
         const movie =
           movies.find(
             item =>
-              item.title === movieTitle
+              item.title === title
           );
+
 
         if (movie) {
           openMovieModal(movie);
@@ -330,10 +569,9 @@ function setupMovieButtons(container) {
       "click",
       function() {
 
-        const url =
-          button.dataset.trailer;
-
-        openTrailer(url);
+        openTrailer(
+          button.dataset.trailer
+        );
 
       }
     );
@@ -343,11 +581,14 @@ function setupMovieButtons(container) {
 }
 
 
-/* ================= TRAILER ================= */
+/* =========================================================
+   OPEN TRAILER
+   ========================================================= */
 
 function openTrailer(url) {
 
   if (!url) return;
+
 
   window.open(
     url,
@@ -358,7 +599,9 @@ function openTrailer(url) {
 }
 
 
-/* ================= HOME MOVIES ================= */
+/* =========================================================
+   LOAD MOVIES
+   ========================================================= */
 
 function loadMovies() {
 
@@ -388,7 +631,9 @@ function loadMovies() {
 }
 
 
-/* ================= COUNTS ================= */
+/* =========================================================
+   UPDATE COUNTS
+   ========================================================= */
 
 function updateCounts() {
 
@@ -409,26 +654,34 @@ function updateCounts() {
 
 
   if (trendingCount) {
+
     trendingCount.textContent =
-      `${Math.min(6, movies.length)} Movies`;
+      "6 Movies";
+
   }
 
 
   if (popularCount) {
+
     popularCount.textContent =
-      `${Math.min(6, movies.length)} Movies`;
+      "6 Movies";
+
   }
 
 
   if (upcomingCount) {
+
     upcomingCount.textContent =
-      `${Math.min(4, movies.length)} Movies`;
+      "4 Movies";
+
   }
 
 }
 
 
-/* ================= SEARCH ================= */
+/* =========================================================
+   SEARCH
+   ========================================================= */
 
 function searchMovies(query) {
 
@@ -470,19 +723,21 @@ function searchMovies(query) {
 
   displayMovies(
     results,
-    searchGrid,
-    false
+    searchGrid
   );
 
 
   searchSection.scrollIntoView({
-    behavior: "smooth"
+    behavior: "smooth",
+    block: "start"
   });
 
 }
 
 
-/* ================= SEARCH FORM ================= */
+/* =========================================================
+   SEARCH FORM
+   ========================================================= */
 
 if (searchForm) {
 
@@ -502,7 +757,9 @@ if (searchForm) {
 }
 
 
-/* ================= CLEAR SEARCH ================= */
+/* =========================================================
+   CLEAR SEARCH
+   ========================================================= */
 
 if (clearSearch) {
 
@@ -520,7 +777,9 @@ if (clearSearch) {
 }
 
 
-/* ================= MODAL ================= */
+/* =========================================================
+   MODAL
+   ========================================================= */
 
 function openMovieModal(movie) {
 
@@ -528,7 +787,7 @@ function openMovieModal(movie) {
 
 
   modalPoster.src =
-    movie.poster;
+    createPoster(movie);
 
   modalPoster.alt =
     `${movie.title} poster`;
@@ -574,7 +833,9 @@ function openMovieModal(movie) {
 }
 
 
-/* ================= CLOSE MODAL ================= */
+/* =========================================================
+   CLOSE MODAL
+   ========================================================= */
 
 function closeMovieModal() {
 
@@ -598,7 +859,9 @@ function closeMovieModal() {
 }
 
 
-/* ================= MODAL EVENTS ================= */
+/* =========================================================
+   MODAL EVENTS
+   ========================================================= */
 
 if (modalClose) {
 
@@ -634,7 +897,9 @@ document.addEventListener(
 );
 
 
-/* ================= MOBILE MENU ================= */
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
 
 if (
   mobileMenuButton &&
@@ -652,36 +917,30 @@ if (
     }
   );
 
-}
 
+  mobileMenu
+    .querySelectorAll("a")
+    .forEach(link => {
 
-/* Close mobile menu after clicking link */
+      link.addEventListener(
+        "click",
+        function() {
 
-if (mobileMenu) {
+          mobileMenu.classList.remove(
+            "active"
+          );
 
-  const menuLinks =
-    mobileMenu.querySelectorAll("a");
+        }
+      );
 
-
-  menuLinks.forEach(link => {
-
-    link.addEventListener(
-      "click",
-      function() {
-
-        mobileMenu.classList.remove(
-          "active"
-        );
-
-      }
-    );
-
-  });
+    });
 
 }
 
 
-/* ================= YEAR ================= */
+/* =========================================================
+   YEAR
+   ========================================================= */
 
 if (year) {
 
@@ -691,51 +950,57 @@ if (year) {
 }
 
 
-/* ================= SECURITY ================= */
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
 
 function escapeHtml(value) {
 
   return String(value)
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
 }
 
+
+/* =========================================================
+   ESCAPE ATTRIBUTE
+   ========================================================= */
 
 function escapeAttribute(value) {
 
   return String(value)
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 
 }
 
 
-/* ================= START ================= */
+/* =========================================================
+   ESCAPE SVG
+   ========================================================= */
+
+function escapeSvg(value) {
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+
+}
+
+
+/* =========================================================
+   START
+   ========================================================= */
 
 loadMovies();
 ```
