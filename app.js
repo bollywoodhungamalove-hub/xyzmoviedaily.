@@ -1,189 +1,301 @@
-document.addEventListener("DOMContentLoaded", function () {
+```javascript
+/* ==========================================
+   XYZMOVIEDAILY
+   Movie Data
+========================================== */
 
-  const movies = [
-    { title: "Dhurandhar", year: "2026", genre: "Action / Thriller", image: "https://image.tmdb.org/t/p/w500/placeholder.jpg", trailer: "https://www.youtube.com/results?search_query=Dhurandhar+official+trailer" 
-    
-    },
-    { title: "Border 2", year: "2026", genre: "War / Drama", image: "https://image.tmdb.org/t/p/w500/placeholder.jpg", trailer: "https://www.youtube.com/results?search_query=Border+2+official+trailer" 
-    }, 
-    { title: "Ramayana", year: "2026", genre: "Mythology / Drama", image: "https://image.tmdb.org/t/p/w500/placeholder.jpg", trailer: "https://www.youtube.com/results?search_query=Ramayana+official+trailer" 
-    }, 
-    { title: "War 2", year: "2025", genre: "Action / Thriller", image: "https://image.tmdb.org/t/p/w500/placeholder.jpg", trailer: "https://www.youtube.com/results?search_query=War+2+official+trailer" } ]
-    {
-      title: "Mirzapur: The Movie",
-      genre: "Action • Crime • Thriller",
-      image: "https://newimages.qfxcinemas.com/S3/uploads/gallery/1782813261880-mirzapur_poster.jpg",
-      trailer: "https://www.youtube.com/results?search_query=Mirzapur+The+Movie+official+trailer"
-    },
+const trendingMovies = [
 
-    {
-      title: "Haiwaan",
-      genre: "Action • Thriller",
-      image: "https://m.media-amazon.com/images/M/MV5BMDI3MDI3NmUtNjAwZS00OWU5LWI4ODEtMzMxMTI2OGRhZjQ5XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg",
-      trailer: "https://www.youtube.com/results?search_query=Haiwaan+official+trailer"
-    },
+  {
+    title: "Avatar",
+    year: "2009",
+    genre: "Sci-Fi / Adventure",
+    image:
+      "https://upload.wikimedia.org/wikipedia/en/b/b0/Avatar-Teaser-Poster.jpg",
+    trailer:
+      "https://www.youtube.com/results?search_query=Avatar+official+trailer"
+  },
 
-    {
-      title: "The Vvaan",
-      genre: "Fantasy • Action",
-      image: "https://www.keralatv.in/media/2026/07/The-Vvan-Release-Date-941x941.jpg",
-      trailer: "https://www.youtube.com/results?search_query=The+Vvaan+official+trailer"
-    },
+  {
+    title: "Inception",
+    year: "2010",
+    genre: "Sci-Fi / Thriller",
+    image:
+      "https://upload.wikimedia.org/wikipedia/en/7/7f/Inception_ver3.jpg",
+    trailer:
+      "https://www.youtube.com/results?search_query=Inception+official+trailer"
+  },
 
-    {
-      title: "Love & War",
-      genre: "Drama • Romance",
-      image: "https://m.media-amazon.com/images/M/MV5BY2IwZmI5OTEtNjljMi00YWIxLWJkYWYtMTRiNTAzMDZjM2M0XkEyXkFqcGc%40._V1_.jpg",
-      trailer: "https://www.youtube.com/results?search_query=Love+and+War+official+trailer+Bollywood"
-    }
-  ];
+  {
+    title: "Interstellar",
+    year: "2014",
+    genre: "Sci-Fi / Drama",
+    image:
+      "https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg",
+    trailer:
+      "https://www.youtube.com/results?search_query=Interstellar+official+trailer"
+  },
 
+  {
+    title: "The Dark Knight",
+    year: "2008",
+    genre: "Action / Crime",
+    image:
+      "https://upload.wikimedia.org/wikipedia/en/8/8a/Dark_Knight.jpg",
+    trailer:
+      "https://www.youtube.com/results?search_query=The+Dark+Knight+official+trailer"
+  },
 
-  const movieList = document.getElementById("movieList");
-  const movieCount = document.getElementById("movieCount");
-  const noResults = document.getElementById("noResults");
-  const searchInput = document.getElementById("searchInput");
-  const searchButton = document.getElementById("searchButton");
-  const year = document.getElementById("year");
+  {
+    title: "Oppenheimer",
+    year: "2023",
+    genre: "Drama / History",
+    image:
+      "https://upload.wikimedia.org/wikipedia/en/4/4a/Oppenheimer_%28film%29.jpg",
+    trailer:
+      "https://www.youtube.com/results?search_query=Oppenheimer+official+trailer"
+  },
 
+  {
+    title: "Dune",
+    year: "2021",
+    genre: "Sci-Fi / Adventure",
+    image:
+      "https://upload.wikimedia.org/wikipedia/en/8/8c/Dune_%282021%29.jpg",
+    trailer:
+      "https://www.youtube.com/results?search_query=Dune+official+trailer"
+  },
 
-  function displayMovies(movieData) {
+  {
+    title: "Avengers: Endgame",
+    year: "2019",
+    genre: "Action / Adventure",
+    image:
+      "https://upload.wikimedia.org/wikipedia/en/0/0d/Avengers_Endgame_poster.jpg",
+    trailer:
+      "https://www.youtube.com/results?search_query=Avengers+Endgame+official+trailer"
+  },
 
-    movieList.innerHTML = "";
-
-    if (movieData.length === 0) {
-
-      noResults.hidden = false;
-      movieCount.textContent = "0 Movies";
-      return;
-
-    }
-
-    noResults.hidden = true;
-
-    movieCount.textContent =
-      movieData.length +
-      (movieData.length === 1 ? " Movie" : " Movies");
-
-
-    movieData.forEach(function (movie) {
-
-      const card = document.createElement("article");
-
-      card.className = "movie-card";
-
-
-      const link = document.createElement("a");
-
-      link.href = movie.trailer;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-
-      link.style.display = "block";
-      link.style.textDecoration = "none";
-      link.style.color = "inherit";
-      link.style.cursor = "pointer";
-
-
-      const image = document.createElement("img");
-
-      image.src = movie.image;
-      image.alt = movie.title;
-      image.loading = "lazy";
-
-
-      const content = document.createElement("div");
-
-      content.className = "movie-card-content";
-
-
-      const title = document.createElement("h3");
-
-      title.textContent = movie.title;
-
-
-      const genre = document.createElement("p");
-
-      genre.textContent = movie.genre;
-
-
-      content.appendChild(title);
-      content.appendChild(genre);
-
-      link.appendChild(image);
-      link.appendChild(content);
-
-      card.appendChild(link);
-
-      movieList.appendChild(card);
-
-    });
-
+  {
+    title: "Joker",
+    year: "2019",
+    genre: "Crime / Drama",
+    image:
+      "https://upload.wikimedia.org/wikipedia/en/e/e1/Joker_%282019_film%29_poster.jpg",
+    trailer:
+      "https://www.youtube.com/results?search_query=Joker+2019+official+trailer"
   }
 
-
-  function searchMovies() {
-
-    const searchText =
-      searchInput.value.trim().toLowerCase();
+];
 
 
-    if (searchText === "") {
+const latestMovies = [
 
-      displayMovies(movies);
-      return;
+  {
+    title: "Avatar: The Way of Water",
+    year: "2022",
+    genre: "Sci-Fi / Adventure",
+    image:
+      "https://upload.wikimedia.org/wikipedia/en/5/5a/Avatar_The_Way_of_Water_poster.jpg",
+    trailer:
+      "https://www.youtube.com/results?search_query=Avatar+The+Way+of+Water+official+trailer"
+  },
 
-    }
+  {
+    title: "Top Gun: Maverick",
+    year: "2022",
+    genre: "Action / Drama",
+    image:
+      "https://upload.wikimedia.org/wikipedia/en/1/13/Top_Gun_Maverick_Poster.jpg",
+    trailer:
+      "https://www.youtube.com/results?search_query=Top+Gun+Maverick+official+trailer"
+  },
+
+  {
+    title: "John Wick",
+    year: "2014",
+    genre: "Action / Thriller",
+    image:
+      "https://upload.wikimedia.org/wikipedia/en/9/98/John_Wick_TeaserPoster.jpg",
+    trailer:
+      "https://www.youtube.com/results?search_query=John+Wick+official+trailer"
+  },
+
+  {
+    title: "Spider-Man: No Way Home",
+    year: "2021",
+    genre: "Action / Adventure",
+    image:
+      "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg",
+    trailer:
+      "https://www.youtube.com/results?search_query=Spider-Man+No+Way+Home+official+trailer"
+  }
+
+];
 
 
-    const results = movies.filter(function (movie) {
+/* ==========================================
+   CREATE MOVIE CARD
+========================================== */
 
-      return (
-        movie.title.toLowerCase().includes(searchText) ||
-        movie.genre.toLowerCase().includes(searchText)
+function createMovieCard(movie, trending = false) {
+
+  const card = document.createElement("article");
+
+  card.className = "movie-card";
+
+  card.innerHTML = `
+
+    <div class="poster-wrapper">
+
+      <img
+        src="${movie.image}"
+        alt="${movie.title} poster"
+        loading="lazy"
+        onerror="this.onerror=null; this.src='https://placehold.co/500x750/18181f/ffffff?text=Poster+Unavailable';"
+      >
+
+      ${
+        trending
+          ? `<span class="trending-badge">TRENDING</span>`
+          : ""
+      }
+
+    </div>
+
+    <div class="movie-info">
+
+      <h3 title="${movie.title}">
+        ${movie.title}
+      </h3>
+
+      <p class="movie-meta">
+        ${movie.year} • ${movie.genre}
+      </p>
+
+      <a
+        class="trailer-button"
+        href="${movie.trailer}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ▶ Watch Official Trailer
+      </a>
+
+    </div>
+
+  `;
+
+  return card;
+}
+
+
+/* ==========================================
+   DISPLAY MOVIES
+========================================== */
+
+function displayMovies() {
+
+  const movieGrid =
+    document.getElementById("movieGrid");
+
+  const latestGrid =
+    document.getElementById("latestGrid");
+
+  const movieCount =
+    document.getElementById("movieCount");
+
+
+  if (movieGrid) {
+
+    movieGrid.innerHTML = "";
+
+    trendingMovies.forEach((movie) => {
+
+      movieGrid.appendChild(
+        createMovieCard(movie, true)
       );
 
     });
 
+  }
 
-    displayMovies(results);
+
+  if (latestGrid) {
+
+    latestGrid.innerHTML = "";
+
+    latestMovies.forEach((movie) => {
+
+      latestGrid.appendChild(
+        createMovieCard(movie, false)
+      );
+
+    });
 
   }
 
 
-  if (searchButton) {
+  if (movieCount) {
 
-    searchButton.addEventListener(
-      "click",
-      searchMovies
-    );
+    movieCount.textContent =
+      `${trendingMovies.length} Movies`;
 
   }
 
-
-  if (searchInput) {
-
-    searchInput.addEventListener(
-      "input",
-      searchMovies
-    );
+}
 
 
-    searchInput.addEventListener(
-      "keydown",
-      function (event) {
+/* ==========================================
+   MOBILE MENU
+========================================== */
 
-        if (event.key === "Enter") {
+function setupMobileMenu() {
 
-          searchMovies();
+  const menuButton =
+    document.getElementById("menuButton");
 
-        }
+  const mobileMenu =
+    document.getElementById("mobileMenu");
 
-      }
-    );
 
+  if (!menuButton || !mobileMenu) {
+    return;
   }
 
+
+  menuButton.addEventListener("click", () => {
+
+    mobileMenu.classList.toggle("active");
+
+  });
+
+
+  const links =
+    mobileMenu.querySelectorAll("a");
+
+
+  links.forEach((link) => {
+
+    link.addEventListener("click", () => {
+
+      mobileMenu.classList.remove("active");
+
+    });
+
+  });
+
+}
+
+
+/* ==========================================
+   CURRENT YEAR
+========================================== */
+
+function setCurrentYear() {
+
+  const year =
+    document.getElementById("year");
 
   if (year) {
 
@@ -192,12 +304,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
   }
 
+}
 
-  displayMovies(movies);
 
+/* ==========================================
+   START WEBSITE
+========================================== */
 
-  console.log(
-    "XYZMOVIEDAILY loaded successfully."
-  );
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
 
-});
+    displayMovies();
+
+    setupMobileMenu();
+
+    setCurrentYear();
+
+  }
+);
+```
