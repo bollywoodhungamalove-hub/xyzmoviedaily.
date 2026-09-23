@@ -1,9 +1,4 @@
 ```css
-/* ========================================
-   XYZMOVIEDAILY
-   Modern Bollywood News Website
-======================================== */
-
 * {
   margin: 0;
   padding: 0;
@@ -15,9 +10,10 @@ html {
 }
 
 body {
-  background: #0b0b0b;
+  background: #090909;
   color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
 }
 
 a {
@@ -30,23 +26,28 @@ img {
   display: block;
 }
 
+button,
+input {
+  font: inherit;
+}
+
 .container {
-  width: min(1200px, 92%);
+  width: min(1180px, 92%);
   margin: auto;
 }
 
 
-/* ========================================
+/* ==============================
    HEADER
-======================================== */
+============================== */
 
 .top-header {
-  background: #101010;
-  border-bottom: 1px solid #262626;
+  background: #0d0d0d;
+  border-bottom: 1px solid #242424;
 }
 
 .header-content {
-  min-height: 82px;
+  min-height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -54,7 +55,7 @@ img {
 }
 
 .logo {
-  font-size: 27px;
+  font-size: 26px;
   font-weight: 900;
   letter-spacing: -1px;
   white-space: nowrap;
@@ -65,25 +66,28 @@ img {
 }
 
 
-/* ========================================
+/* ==============================
    SEARCH
-======================================== */
+============================== */
 
 .search-box {
   display: flex;
-  width: 390px;
+  width: 380px;
   max-width: 100%;
 }
 
 .search-box input {
-  flex: 1;
-  background: #1b1b1b;
+  width: 100%;
+  background: #181818;
   color: #ffffff;
   border: 1px solid #333333;
-  border-right: none;
   padding: 12px 15px;
   outline: none;
-  border-radius: 6px 0 0 6px;
+  border-radius: 5px 0 0 5px;
+}
+
+.search-box input::placeholder {
+  color: #777777;
 }
 
 .search-box input:focus {
@@ -91,44 +95,44 @@ img {
 }
 
 .search-box button {
+  border: 0;
   background: #e50914;
   color: #ffffff;
-  border: none;
   padding: 0 20px;
-  cursor: pointer;
   font-weight: bold;
-  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
 }
 
 .search-box button:hover {
-  background: #ff1a25;
+  background: #ff1b26;
 }
 
 
-/* ========================================
+/* ==============================
    NAVIGATION
-======================================== */
+============================== */
 
 .navbar {
-  background: #151515;
-  border-bottom: 1px solid #292929;
+  background: #121212;
+  border-bottom: 1px solid #242424;
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 100;
 }
 
 .nav-content {
+  min-height: 50px;
   display: flex;
   align-items: center;
   gap: 30px;
-  min-height: 50px;
 }
 
 .nav-content a {
-  color: #bbbbbb;
+  color: #999999;
   font-size: 14px;
   font-weight: bold;
-  transition: 0.2s;
+  padding: 15px 0;
 }
 
 .nav-content a:hover,
@@ -138,95 +142,76 @@ img {
 
 .nav-content a.active {
   border-bottom: 2px solid #e50914;
-  padding-bottom: 15px;
 }
 
 
-/* ========================================
-   FEATURED
-======================================== */
+/* ==============================
+   HERO
+============================== */
 
-.featured {
-  margin-top: 35px;
-  min-height: 470px;
-  display: grid;
-  grid-template-columns: 42% 58%;
-  background: #151515;
-  border: 1px solid #292929;
+.hero {
+  margin-top: 30px;
+  min-height: 390px;
   border-radius: 10px;
   overflow: hidden;
+  position: relative;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.96),
+      rgba(0, 0, 0, 0.70),
+      rgba(0, 0, 0, 0.25)
+    ),
+    linear-gradient(
+      135deg,
+      #3b0b0b,
+      #171717 55%,
+      #090909
+    );
 }
 
-.featured-image {
-  height: 470px;
-  overflow: hidden;
-}
-
-.featured-image img {
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s;
-}
-
-.featured:hover .featured-image img {
-  transform: scale(1.04);
-}
-
-.featured-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 55px;
+.hero-content {
+  max-width: 650px;
+  padding: 70px 55px;
 }
 
 .tag {
-  display: inline-block;
-  width: fit-content;
   color: #e50914;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 900;
-  letter-spacing: 1px;
-  margin-bottom: 14px;
+  letter-spacing: 2px;
 }
 
-.featured-content h1 {
-  font-size: 45px;
+.hero h1 {
+  font-size: 50px;
   line-height: 1.05;
-  margin-bottom: 14px;
+  margin: 15px 0;
 }
 
-.meta {
-  color: #999999;
-  font-size: 14px;
-  margin-bottom: 20px;
-}
-
-.description {
-  color: #bdbdbd;
-  max-width: 560px;
-  line-height: 1.8;
+.hero p {
+  color: #b7b7b7;
+  font-size: 17px;
+  max-width: 580px;
   margin-bottom: 28px;
 }
 
-.primary-button {
-  width: fit-content;
+.hero-button {
+  display: inline-block;
   background: #e50914;
-  color: #ffffff;
-  border: none;
+  padding: 12px 22px;
   border-radius: 5px;
-  padding: 13px 25px;
   font-weight: bold;
-  cursor: pointer;
 }
 
-.primary-button:hover {
-  background: #ff1a25;
+.hero-button:hover {
+  background: #ff1b26;
 }
 
 
-/* ========================================
+/* ==============================
    SECTIONS
-======================================== */
+============================== */
 
 .section {
   margin-top: 55px;
@@ -234,40 +219,35 @@ img {
 
 .section-heading {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: end;
   margin-bottom: 22px;
 }
 
+.section-label {
+  color: #e50914;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
 .section-heading h2 {
-  font-size: 25px;
+  font-size: 28px;
+  line-height: 1.2;
+  margin-top: 4px;
 }
 
-.section-heading h2::before {
-  content: "";
-  display: inline-block;
-  width: 4px;
-  height: 22px;
-  background: #e50914;
-  margin-right: 10px;
-  vertical-align: -3px;
-}
-
-.section-heading a {
-  color: #999999;
+.movie-count {
+  color: #777777;
   font-size: 13px;
 }
 
-.section-heading a:hover {
-  color: #ffffff;
-}
 
+/* ==============================
+   MOVIES
+============================== */
 
-/* ========================================
-   MOVIE ROW
-======================================== */
-
-.movie-row {
+.movie-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 18px;
@@ -275,10 +255,10 @@ img {
 
 .movie-card {
   background: #151515;
-  border: 1px solid #292929;
+  border: 1px solid #272727;
   border-radius: 7px;
   overflow: hidden;
-  transition: transform 0.25s, border-color 0.25s;
+  transition: 0.25s ease;
 }
 
 .movie-card:hover {
@@ -289,6 +269,7 @@ img {
 .movie-card img {
   height: 310px;
   object-fit: cover;
+  background: #202020;
 }
 
 .movie-card-content {
@@ -305,98 +286,133 @@ img {
   font-size: 12px;
 }
 
-
-/* ========================================
-   NEWS
-======================================== */
-
-.news-layout {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 20px;
+.no-results {
+  text-align: center;
+  padding: 50px 20px;
+  background: #141414;
+  border: 1px solid #252525;
+  border-radius: 8px;
 }
 
-.main-news {
-  background: #151515;
-  border: 1px solid #292929;
+.no-results h3 {
+  margin-bottom: 8px;
+}
+
+.no-results p {
+  color: #777777;
+}
+
+
+/* ==============================
+   CATEGORIES
+============================== */
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.category-card {
+  background: #141414;
+  border: 1px solid #272727;
+  border-radius: 8px;
+  padding: 24px;
+  transition: 0.25s;
+}
+
+.category-card:hover {
+  border-color: #e50914;
+  transform: translateY(-3px);
+}
+
+.category-card span {
+  font-size: 28px;
+}
+
+.category-card h3 {
+  margin-top: 12px;
+  font-size: 17px;
+}
+
+.category-card p {
+  color: #777777;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+
+/* ==============================
+   NEWS
+============================== */
+
+.news-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 18px;
+}
+
+.news-card {
+  background: #141414;
+  border: 1px solid #272727;
   border-radius: 8px;
   overflow: hidden;
 }
 
-.news-image {
-  height: 300px;
+.featured-news {
+  display: grid;
+  grid-template-columns: 40% 60%;
 }
 
-.news-image img {
-  height: 100%;
-  object-fit: cover;
+.news-placeholder {
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 70px;
+  background:
+    radial-gradient(
+      circle,
+      #4a1111,
+      #161616 65%
+    );
 }
 
 .news-content {
-  padding: 22px;
+  padding: 25px;
+}
+
+.news-tag {
+  color: #e50914;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
 }
 
 .news-content h3 {
-  font-size: 25px;
-  line-height: 1.3;
-  margin-bottom: 12px;
+  font-size: 20px;
+  line-height: 1.35;
+  margin: 10px 0;
 }
 
 .news-content p {
-  color: #999999;
+  color: #888888;
+  font-size: 13px;
   line-height: 1.7;
-  margin-bottom: 17px;
 }
 
 .news-content a {
+  display: inline-block;
+  margin-top: 15px;
   color: #e50914;
   font-size: 13px;
   font-weight: bold;
 }
 
 
-/* ========================================
-   SIDE NEWS
-======================================== */
-
-.side-news {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.small-news {
-  background: #151515;
-  border: 1px solid #292929;
-  border-radius: 8px;
-  padding: 20px;
-  flex: 1;
-  transition: border-color 0.2s;
-}
-
-.small-news:hover {
-  border-color: #555555;
-}
-
-.small-news .tag {
-  margin-bottom: 8px;
-}
-
-.small-news h3 {
-  font-size: 17px;
-  line-height: 1.35;
-  margin-bottom: 10px;
-}
-
-.small-news p {
-  color: #777777;
-  font-size: 11px;
-}
-
-
-/* ========================================
+/* ==============================
    REVIEWS
-======================================== */
+============================== */
 
 .review-grid {
   display: grid;
@@ -405,46 +421,46 @@ img {
 }
 
 .review-card {
-  background: #151515;
-  border: 1px solid #292929;
+  background: #141414;
+  border: 1px solid #272727;
   border-radius: 8px;
   padding: 25px;
 }
 
-.rating {
-  display: inline-block;
+.review-score {
   color: #ffc107;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .review-card h3 {
   font-size: 19px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .review-card p {
-  color: #999999;
-  font-size: 14px;
+  color: #888888;
+  font-size: 13px;
   line-height: 1.7;
-  margin-bottom: 15px;
 }
 
 .review-card a {
+  display: inline-block;
   color: #e50914;
+  margin-top: 15px;
   font-size: 13px;
   font-weight: bold;
 }
 
 
-/* ========================================
+/* ==============================
    FOOTER
-======================================== */
+============================== */
 
 footer {
-  background: #101010;
-  border-top: 1px solid #292929;
   margin-top: 70px;
+  background: #0d0d0d;
+  border-top: 1px solid #252525;
 }
 
 .footer-content {
@@ -472,7 +488,7 @@ footer {
 }
 
 .footer-links a {
-  color: #999999;
+  color: #888888;
   font-size: 13px;
 }
 
@@ -481,23 +497,22 @@ footer {
 }
 
 .copyright {
-  border-top: 1px solid #222222;
-  padding: 18px;
-  text-align: center;
+  border-top: 1px solid #202020;
   color: #666666;
   font-size: 12px;
+  text-align: center;
+  padding: 18px;
 }
 
 
-/* ========================================
+/* ==============================
    TABLET
-======================================== */
+============================== */
 
 @media (max-width: 900px) {
 
   .header-content {
     flex-direction: column;
-    justify-content: center;
     padding: 20px 0;
   }
 
@@ -505,36 +520,28 @@ footer {
     width: 100%;
   }
 
-  .featured {
-    grid-template-columns: 1fr;
+  .hero h1 {
+    font-size: 40px;
   }
 
-  .featured-image {
-    height: 400px;
-  }
-
-  .featured-content {
-    padding: 35px;
-  }
-
-  .movie-row {
+  .movie-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .news-layout {
-    grid-template-columns: 1fr;
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .review-grid {
-    grid-template-columns: 1fr 1fr;
+  .news-grid {
+    grid-template-columns: 1fr;
   }
 
 }
 
 
-/* ========================================
+/* ==============================
    MOBILE
-======================================== */
+============================== */
 
 @media (max-width: 600px) {
 
@@ -543,12 +550,11 @@ footer {
   }
 
   .logo {
-    font-size: 23px;
+    font-size: 22px;
   }
 
   .nav-content {
-    justify-content: center;
-    gap: 15px;
+    gap: 18px;
     overflow-x: auto;
   }
 
@@ -557,45 +563,33 @@ footer {
     font-size: 12px;
   }
 
-  .nav-content a.active {
-    padding-bottom: 16px;
+  .hero {
+    min-height: 350px;
   }
 
-  .featured {
-    margin-top: 20px;
+  .hero-content {
+    padding: 50px 25px;
   }
 
-  .featured-image {
-    height: 330px;
-  }
-
-  .featured-content {
-    padding: 25px;
-  }
-
-  .featured-content h1 {
+  .hero h1 {
     font-size: 32px;
   }
 
-  .description {
+  .hero p {
     font-size: 14px;
   }
 
-  .section {
-    margin-top: 40px;
-  }
-
   .section-heading h2 {
-    font-size: 21px;
+    font-size: 22px;
   }
 
-  .movie-row {
+  .movie-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
 
   .movie-card img {
-    height: 235px;
+    height: 230px;
   }
 
   .movie-card-content {
@@ -606,12 +600,16 @@ footer {
     font-size: 14px;
   }
 
-  .news-image {
-    height: 230px;
+  .category-grid {
+    grid-template-columns: 1fr 1fr;
   }
 
-  .news-content h3 {
-    font-size: 20px;
+  .featured-news {
+    grid-template-columns: 1fr;
+  }
+
+  .news-placeholder {
+    min-height: 180px;
   }
 
   .review-grid {
@@ -629,18 +627,22 @@ footer {
 }
 
 
-/* ========================================
-   VERY SMALL SCREEN
-======================================== */
+/* ==============================
+   SMALL MOBILE
+============================== */
 
 @media (max-width: 380px) {
 
-  .movie-row {
+  .movie-grid {
     grid-template-columns: 1fr;
   }
 
   .movie-card img {
-    height: 400px;
+    height: 390px;
+  }
+
+  .category-grid {
+    grid-template-columns: 1fr;
   }
 
 }
