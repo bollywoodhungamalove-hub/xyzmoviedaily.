@@ -1,159 +1,59 @@
 ```javascript
-// ==========================================
-// XYZMOVIEDAILY
-// AUTOMATIC TMDB TRENDING MOVIES
-// ==========================================
+/* ==================================================
+   XYZMOVIEDAILY
+
+   AUTOMATIC MOVIE WEBSITE
+
+   Powered by TMDB API
+================================================== */
 
 
-// ------------------------------------------
-// 1. PUT YOUR TMDB API KEY HERE
-// ------------------------------------------
+/* ==================================================
+   1. TMDB API KEY
 
-const TMDB_API_KEY = "PASTE_YOUR_TMDB_API_KEY_HERE";
+   IMPORTANT:
+   Put your own TMDB API key here.
 
+   Example:
 
-// ------------------------------------------
-// 2. TMDB SETTINGS
-// ------------------------------------------
+   const TMDB_API_KEY = "abc123...";
 
-const TMDB_BASE_URL = "https://api.themoviedb.org/3";
+================================================== */
 
-const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
-
-
-// ------------------------------------------
-// 3. GET TRENDING MOVIES
-// ------------------------------------------
-
-async function getTrendingMovies() {
-
-  const url =
-    `${TMDB_BASE_URL}/trending/movie/week` +
-    `?api_key=${TMDB_API_KEY}` +
-    `&language=en-US`;
-
-  try {
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(
-        `TMDB error: ${response.status}`
-      );
-    }
-
-    const data = await response.json();
-
-    return data.results || [];
-
-  } catch (error) {
-
-    console.error(
-      "Could not load TMDB movies:",
-      error
-    );
-
-    return [];
-
-  }
-}
+const TMDB_API_KEY =
+  "PASTE_YOUR_TMDB_API_KEY_HERE";
 
 
-// ------------------------------------------
-// 4. GET MOVIE TRAILER
-// ------------------------------------------
+/* ==================================================
+   2. TMDB SETTINGS
+================================================== */
 
-async function getMovieTrailer(movieId) {
-
-  const url =
-    `${TMDB_BASE_URL}/movie/${movieId}/videos` +
-    `?api_key=${TMDB_API_KEY}` +
-    `&language=en-US`;
-
-  try {
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      return null;
-    }
-
-    const data = await response.json();
-
-    const videos = data.results || [];
+const TMDB_BASE_URL =
+  "https://api.themoviedb.org/3";
 
 
-    // First look for an official YouTube trailer
-
-    let trailer = videos.find((video) => {
-
-      return (
-        video.site === "YouTube" &&
-        video.type === "Trailer" &&
-        video.official === true
-      );
-
-    });
+const TMDB_IMAGE_URL =
+  "https://image.tmdb.org/t/p/w500";
 
 
-    // If no official trailer exists,
-    // look for any YouTube trailer
-
-    if (!trailer) {
-
-      trailer = videos.find((video) => {
-
-        return (
-          video.site === "YouTube" &&
-          video.type === "Trailer"
-        );
-
-      });
-
-    }
+const TMDB_BACKDROP_URL =
+  "https://image.tmdb.org/t/p/w1280";
 
 
-    // If still nothing, look for a teaser
+/* ==================================================
+   3. GLOBAL VARIABLES
+================================================== */
 
-    if (!trailer) {
+let currentMovies = [];
 
-      trailer = videos.find((video) => {
-
-        return (
-          video.site === "YouTube" &&
-          video.type === "Teaser"
-        );
-
-      });
-
-    }
+let searchResults = [];
 
 
-    if (!trailer) {
-      return null;
-    }
+/* ==================================================
+   4. GENRE NAMES
+================================================== */
 
-
-    return `https://www.youtube.com/watch?v=${trailer.key}`;
-
-  } catch (error) {
-
-    console.error(
-      "Trailer error:",
-      error
-    );
-
-    return null;
-
-  }
-}
-
-
-// ------------------------------------------
-// 5. GET GENRE NAME
-// ------------------------------------------
-
-const genreNames = {
+const genres = {
 
   28: "Action",
   12: "Adventure",
@@ -178,6 +78,115 @@ const genreNames = {
 };
 
 
+/* ==================================================
+   5. CHECK API KEY
+================================================== */
+
+function hasApiKey() {
+
+  return (
+    TMDB_API_KEY &&
+    TMDB_API_KEY !==
+      "PASTE_YOUR_TMDB_API_KEY_HERE"
+  );
+
+}
+
+
+/* ==================================================
+   6. API REQUEST
+================================================== */
+
+async function tmdbRequest(endpoint) {
+
+  if (!hasApiKey()) {
+
+    throw new Error(
+      "TMDB API key is missing."
+    );
+
+  }
+
+
+  const separator =
+    endpoint.includes("?")
+      ? "&"
+      : "?";
+
+
+  const url =
+    `${TMDB_BASE_URL}${endpoint}` +
+    `${separator}api_key=${encodeURIComponent(TMDB_API_KEY)}`;
+
+
+  const response =
+    await fetch(url);
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      `TMDB API error: ${response.status}`
+    );
+
+  }
+
+
+  return await response.json();
+
+}
+
+
+/* ==================================================
+   7. IMAGE URL
+================================================== */
+
+function getPosterUrl(movie) {
+
+  if (!movie.poster_path) {
+
+    return (
+      "https://placehold.co/500x750/18181f/ffffff" +
+      "?text=No+Poster"
+    );
+
+  }
+
+
+  return (
+    TMDB_IMAGE_URL +
+    movie.poster_path
+  );
+
+}
+
+
+/* ==================================================
+   8. RELEASE YEAR
+================================================== */
+
+function getYear(movie) {
+
+  const date =
+    movie.release_date;
+
+
+  if (!date) {
+
+    return "Coming Soon";
+
+  }
+
+
+  return date.substring(0, 4);
+
+}
+
+
+/* ==================================================
+   9. GENRES
+================================================== */
+
 function getGenres(movie) {
 
   if (
@@ -193,58 +202,207 @@ function getGenres(movie) {
   return movie.genre_ids
     .slice(0, 2)
     .map(
-      (id) => genreNames[id] || "Movie"
+      id => genres[id] || "Movie"
     )
     .join(" / ");
 
 }
 
 
-// ------------------------------------------
-// 6. CREATE MOVIE CARD
-// ------------------------------------------
+/* ==================================================
+   10. GET MOVIE TRAILER
+================================================== */
+
+async function getMovieTrailer(movieId) {
+
+  try {
+
+    const data =
+      await tmdbRequest(
+        `/movie/${movieId}/videos?language=en-US`
+      );
+
+
+    const videos =
+      data.results || [];
+
+
+    /* ------------------------------------------
+       FIRST: OFFICIAL YOUTUBE TRAILER
+    ------------------------------------------ */
+
+    let trailer =
+      videos.find(video => {
+
+        return (
+          video.site === "YouTube" &&
+          video.type === "Trailer" &&
+          video.official === true
+        );
+
+      });
+
+
+    /* ------------------------------------------
+       SECOND: ANY YOUTUBE TRAILER
+    ------------------------------------------ */
+
+    if (!trailer) {
+
+      trailer =
+        videos.find(video => {
+
+          return (
+            video.site === "YouTube" &&
+            video.type === "Trailer"
+          );
+
+        });
+
+    }
+
+
+    /* ------------------------------------------
+       THIRD: YOUTUBE TEASER
+    ------------------------------------------ */
+
+    if (!trailer) {
+
+      trailer =
+        videos.find(video => {
+
+          return (
+            video.site === "YouTube" &&
+            video.type === "Teaser"
+          );
+
+        });
+
+    }
+
+
+    if (trailer) {
+
+      return (
+        `https://www.youtube.com/watch?v=${trailer.key}`
+      );
+
+    }
+
+
+    return null;
+
+  } catch (error) {
+
+    console.error(
+      "Trailer error:",
+      error
+    );
+
+    return null;
+
+  }
+
+}
+
+
+/* ==================================================
+   11. CREATE TRAILER LINK
+================================================== */
+
+function createTrailerLink(movie) {
+
+  const query =
+    encodeURIComponent(
+      `${movie.title} official trailer`
+    );
+
+
+  return (
+    `https://www.youtube.com/results?search_query=${query}`
+  );
+
+}
+
+
+/* ==================================================
+   12. CREATE MOVIE CARD
+================================================== */
 
 async function createMovieCard(
   movie,
-  index
+  position = 0,
+  section = "movie"
 ) {
 
   const card =
     document.createElement("article");
 
-  card.className = "movie-card";
+
+  card.className =
+    "movie-card";
 
 
-  // Poster
+  const poster =
+    getPosterUrl(movie);
 
-  let poster;
 
-  if (movie.poster_path) {
+  let trailer =
+    await getMovieTrailer(movie.id);
 
-    poster =
-      IMAGE_BASE_URL +
-      movie.poster_path;
 
-  } else {
+  if (!trailer) {
 
-    poster =
-      "https://placehold.co/500x750/18181f/ffffff?text=No+Poster";
+    trailer =
+      createTrailerLink(movie);
 
   }
 
 
-  // Trailer
+  const badge =
+    section === "trending"
+      ? `
+        <span class="trending-badge">
+          #${position + 1} TRENDING
+        </span>
+      `
+      : "";
 
-  const trailer =
-    await getMovieTrailer(movie.id);
+
+  card.innerHTML = `
+
+    <div class="poster-wrapper">
+
+      <img
+        src="${poster}"
+        alt="${escapeHtml(movie.title || "Movie")}"
+        loading="lazy"
+      >
+
+      ${badge}
+
+    </div>
 
 
-  let trailerButton;
+    <div class="movie-info">
+
+      <h3
+        title="${escapeHtml(movie.title || "")}"
+      >
+        ${escapeHtml(movie.title || "Untitled")}
+      </h3>
 
 
-  if (trailer) {
+      <p class="movie-meta">
 
-    trailerButton = `
+        ${getYear(movie)}
+
+        •
+
+        ${getGenres(movie)}
+
+      </p>
+
 
       <a
         class="trailer-button"
@@ -255,82 +413,51 @@ async function createMovieCard(
         ▶ Watch Official Trailer
       </a>
 
-    `;
-
-  } else {
-
-    // If TMDB has no trailer,
-    // search YouTube instead.
-
-    const searchText =
-      encodeURIComponent(
-        `${movie.title} official trailer`
-      );
-
-    trailerButton = `
-
-      <a
-        class="trailer-button"
-        href="https://www.youtube.com/results?search_query=${searchText}"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        ▶ Find Official Trailer
-      </a>
-
-    `;
-
-  }
-
-
-  card.innerHTML = `
-
-    <div class="poster-wrapper">
-
-      <img
-        src="${poster}"
-        alt="${movie.title} poster"
-        loading="lazy"
-      >
-
-      ${
-        index < 5
-          ? `<span class="trending-badge">
-               #${index + 1} TRENDING
-             </span>`
-          : ""
-      }
-
-    </div>
-
-
-    <div class="movie-info">
-
-      <h3 title="${movie.title}">
-        ${movie.title}
-      </h3>
-
-
-      <p class="movie-meta">
-
-        ${
-          movie.release_date
-            ? movie.release_date.substring(0, 4)
-            : "Coming Soon"
-        }
-
-        •
-
-        ${getGenres(movie)}
-
-      </p>
-
-
-      ${trailerButton}
-
     </div>
 
   `;
+
+
+  /* ------------------------------------------
+     OPEN DETAILS WHEN POSTER / TITLE CLICKED
+  ------------------------------------------ */
+
+  const posterArea =
+    card.querySelector(
+      ".poster-wrapper"
+    );
+
+
+  const title =
+    card.querySelector("h3");
+
+
+  posterArea.style.cursor =
+    "pointer";
+
+
+  title.style.cursor =
+    "pointer";
+
+
+  posterArea.addEventListener(
+    "click",
+    () => {
+
+      openMovieModal(movie);
+
+    }
+  );
+
+
+  title.addEventListener(
+    "click",
+    () => {
+
+      openMovieModal(movie);
+
+    }
+  );
 
 
   return card;
@@ -338,73 +465,48 @@ async function createMovieCard(
 }
 
 
-// ------------------------------------------
-// 7. DISPLAY TRENDING MOVIES
-// ------------------------------------------
+/* ==================================================
+   13. DISPLAY MOVIES
+================================================== */
 
-async function displayTrendingMovies() {
+async function displayMovies(
+  movies,
+  containerId,
+  countId,
+  sectionName
+) {
 
-  const movieGrid =
+  const container =
     document.getElementById(
-      "movieGrid"
+      containerId
     );
 
-  const movieCount =
+
+  const count =
     document.getElementById(
-      "movieCount"
+      countId
     );
 
 
-  if (!movieGrid) {
+  if (!container) {
+
     return;
+
   }
 
 
-  // Loading message
+  if (!movies || movies.length === 0) {
 
-  movieGrid.innerHTML = `
+    showError(
+      container,
+      "No movies found."
+    );
 
-    <div class="loading-message">
+    if (count) {
 
-      <div class="loader"></div>
-
-      <p>
-        Loading trending movies...
-      </p>
-
-    </div>
-
-  `;
-
-
-  const movies =
-    await getTrendingMovies();
-
-
-  // No movies
-
-  if (!movies.length) {
-
-    movieGrid.innerHTML = `
-
-      <div class="error-message">
-
-        <h3>
-          Unable to load movies
-        </h3>
-
-        <p>
-          Please check your TMDB API key
-          and refresh the page.
-        </p>
-
-      </div>
-
-    `;
-
-    if (movieCount) {
-      movieCount.textContent =
+      count.textContent =
         "0 Movies";
+
     }
 
     return;
@@ -412,78 +514,701 @@ async function displayTrendingMovies() {
   }
 
 
-  // Clear loading
-
-  movieGrid.innerHTML = "";
+  container.innerHTML = "";
 
 
-  // Show first 12 movies
-
-  const selectedMovies =
+  const limitedMovies =
     movies.slice(0, 12);
 
 
-  // Create cards
+  if (count) {
 
-  for (
-    let i = 0;
-    i < selectedMovies.length;
-    i++
-  ) {
-
-    const card =
-      await createMovieCard(
-        selectedMovies[i],
-        i
-      );
-
-    movieGrid.appendChild(card);
+    count.textContent =
+      `${limitedMovies.length} Movies`;
 
   }
 
 
-  // Update count
+  for (
+    let i = 0;
+    i < limitedMovies.length;
+    i++
+  ) {
 
-  if (movieCount) {
+    try {
 
-    movieCount.textContent =
-      `${selectedMovies.length} Movies`;
+      const card =
+        await createMovieCard(
+          limitedMovies[i],
+          i,
+          sectionName
+        );
+
+
+      container.appendChild(card);
+
+    } catch (error) {
+
+      console.error(
+        "Card error:",
+        error
+      );
+
+    }
 
   }
 
 }
 
 
-// ------------------------------------------
-// 8. MOBILE MENU
-// ------------------------------------------
+/* ==================================================
+   14. LOADING
+================================================== */
+
+function showLoading(
+  containerId,
+  message
+) {
+
+  const container =
+    document.getElementById(
+      containerId
+    );
+
+
+  if (!container) {
+
+    return;
+
+  }
+
+
+  container.innerHTML = `
+
+    <div class="loading-message">
+
+      <div class="loader"></div>
+
+      <p>
+        ${message}
+      </p>
+
+    </div>
+
+  `;
+
+}
+
+
+/* ==================================================
+   15. ERROR
+================================================== */
+
+function showError(
+  container,
+  message
+) {
+
+  container.innerHTML = `
+
+    <div class="error-message">
+
+      <h3>
+        Unable to load movies
+      </h3>
+
+      <p>
+        ${message}
+      </p>
+
+    </div>
+
+  `;
+
+}
+
+
+/* ==================================================
+   16. LOAD TRENDING
+================================================== */
+
+async function loadTrending() {
+
+  showLoading(
+    "trendingGrid",
+    "Loading trending movies..."
+  );
+
+
+  try {
+
+    const data =
+      await tmdbRequest(
+        "/trending/movie/week?language=en-US"
+      );
+
+
+    currentMovies =
+      data.results || [];
+
+
+    await displayMovies(
+      currentMovies,
+      "trendingGrid",
+      "trendingCount",
+      "trending"
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Trending error:",
+      error
+    );
+
+
+    showError(
+      document.getElementById(
+        "trendingGrid"
+      ),
+      hasApiKey()
+        ? "There was a problem connecting to TMDB."
+        : "Add your TMDB API key in app.js first."
+    );
+
+  }
+
+}
+
+
+/* ==================================================
+   17. LOAD POPULAR
+================================================== */
+
+async function loadPopular() {
+
+  showLoading(
+    "popularGrid",
+    "Loading popular movies..."
+  );
+
+
+  try {
+
+    const data =
+      await tmdbRequest(
+        "/movie/popular?language=en-US&page=1"
+      );
+
+
+    await displayMovies(
+      data.results || [],
+      "popularGrid",
+      "popularCount",
+      "popular"
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Popular error:",
+      error
+    );
+
+
+    showError(
+      document.getElementById(
+        "popularGrid"
+      ),
+      hasApiKey()
+        ? "There was a problem connecting to TMDB."
+        : "Add your TMDB API key in app.js first."
+    );
+
+  }
+
+}
+
+
+/* ==================================================
+   18. LOAD UPCOMING
+================================================== */
+
+async function loadUpcoming() {
+
+  showLoading(
+    "upcomingGrid",
+    "Loading upcoming movies..."
+  );
+
+
+  try {
+
+    const data =
+      await tmdbRequest(
+        "/movie/upcoming?language=en-US&page=1"
+      );
+
+
+    await displayMovies(
+      data.results || [],
+      "upcomingGrid",
+      "upcomingCount",
+      "upcoming"
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Upcoming error:",
+      error
+    );
+
+
+    showError(
+      document.getElementById(
+        "upcomingGrid"
+      ),
+      hasApiKey()
+        ? "There was a problem connecting to TMDB."
+        : "Add your TMDB API key in app.js first."
+    );
+
+  }
+
+}
+
+
+/* ==================================================
+   19. SEARCH MOVIES
+================================================== */
+
+async function searchMovies(query) {
+
+  const searchSection =
+    document.getElementById(
+      "searchSection"
+    );
+
+
+  const searchGrid =
+    document.getElementById(
+      "searchGrid"
+    );
+
+
+  const searchTitle =
+    document.getElementById(
+      "searchTitle"
+    );
+
+
+  if (!query) {
+
+    return;
+
+  }
+
+
+  searchSection.hidden =
+    false;
+
+
+  searchTitle.textContent =
+    `Results for "${query}"`;
+
+
+  searchGrid.innerHTML = `
+
+    <div class="loading-message">
+
+      <div class="loader"></div>
+
+      <p>
+        Searching movies...
+      </p>
+
+    </div>
+
+  `;
+
+
+  searchSection.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
+
+  try {
+
+    const encoded =
+      encodeURIComponent(query);
+
+
+    const data =
+      await tmdbRequest(
+        `/search/movie?query=${encoded}&language=en-US&page=1&include_adult=false`
+      );
+
+
+    searchResults =
+      data.results || [];
+
+
+    await displayMovies(
+      searchResults,
+      "searchGrid",
+      null,
+      "search"
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Search error:",
+      error
+    );
+
+
+    showError(
+      searchGrid,
+      "Unable to search movies right now."
+    );
+
+  }
+
+}
+
+
+/* ==================================================
+   20. SEARCH FORM
+================================================== */
+
+function setupSearch() {
+
+  const form =
+    document.getElementById(
+      "searchForm"
+    );
+
+
+  const input =
+    document.getElementById(
+      "searchInput"
+    );
+
+
+  if (!form || !input) {
+
+    return;
+
+  }
+
+
+  form.addEventListener(
+    "submit",
+    event => {
+
+      event.preventDefault();
+
+
+      const query =
+        input.value.trim();
+
+
+      if (!query) {
+
+        input.focus();
+
+        return;
+
+      }
+
+
+      searchMovies(query);
+
+    }
+  );
+
+}
+
+
+/* ==================================================
+   21. CLEAR SEARCH
+================================================== */
+
+function setupClearSearch() {
+
+  const button =
+    document.getElementById(
+      "clearSearch"
+    );
+
+
+  const section =
+    document.getElementById(
+      "searchSection"
+    );
+
+
+  const input =
+    document.getElementById(
+      "searchInput"
+    );
+
+
+  if (!button) {
+
+    return;
+
+  }
+
+
+  button.addEventListener(
+    "click",
+    () => {
+
+      section.hidden =
+        true;
+
+
+      input.value =
+        "";
+
+
+      document.getElementById(
+        "trending"
+      ).scrollIntoView({
+        behavior: "smooth"
+      });
+
+    }
+  );
+
+}
+
+
+/* ==================================================
+   22. MOVIE MODAL
+================================================== */
+
+async function openMovieModal(movie) {
+
+  const modal =
+    document.getElementById(
+      "movieModal"
+    );
+
+
+  const poster =
+    document.getElementById(
+      "modalPoster"
+    );
+
+
+  const title =
+    document.getElementById(
+      "modalTitle"
+    );
+
+
+  const meta =
+    document.getElementById(
+      "modalMeta"
+    );
+
+
+  const overview =
+    document.getElementById(
+      "modalOverview"
+    );
+
+
+  const trailerButton =
+    document.getElementById(
+      "modalTrailer"
+    );
+
+
+  poster.src =
+    getPosterUrl(movie);
+
+
+  poster.alt =
+    movie.title || "Movie poster";
+
+
+  title.textContent =
+    movie.title || "Untitled";
+
+
+  meta.textContent =
+    `${getYear(movie)} • ${getGenres(movie)}`;
+
+
+  overview.textContent =
+    movie.overview ||
+    "No movie description is available yet.";
+
+
+  trailerButton.href =
+    createTrailerLink(movie);
+
+
+  modal.classList.add(
+    "active"
+  );
+
+
+  modal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+
+  document.body.classList.add(
+    "modal-open"
+  );
+
+
+  /* ------------------------------------------
+     FIND BETTER TRAILER
+  ------------------------------------------ */
+
+  const trailer =
+    await getMovieTrailer(movie.id);
+
+
+  if (trailer) {
+
+    trailerButton.href =
+      trailer;
+
+  }
+
+}
+
+
+/* ==================================================
+   23. CLOSE MODAL
+================================================== */
+
+function closeMovieModal() {
+
+  const modal =
+    document.getElementById(
+      "movieModal"
+    );
+
+
+  modal.classList.remove(
+    "active"
+  );
+
+
+  modal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+
+  document.body.classList.remove(
+    "modal-open"
+  );
+
+}
+
+
+/* ==================================================
+   24. MODAL EVENTS
+================================================== */
+
+function setupModal() {
+
+  const close =
+    document.getElementById(
+      "modalClose"
+    );
+
+
+  const overlay =
+    document.getElementById(
+      "modalOverlay"
+    );
+
+
+  if (close) {
+
+    close.addEventListener(
+      "click",
+      closeMovieModal
+    );
+
+  }
+
+
+  if (overlay) {
+
+    overlay.addEventListener(
+      "click",
+      closeMovieModal
+    );
+
+  }
+
+
+  document.addEventListener(
+    "keydown",
+    event => {
+
+      if (
+        event.key === "Escape"
+      ) {
+
+        closeMovieModal();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* ==================================================
+   25. MOBILE MENU
+================================================== */
 
 function setupMobileMenu() {
 
-  const menuButton =
+  const button =
     document.getElementById(
       "menuButton"
     );
 
-  const mobileMenu =
+
+  const menu =
     document.getElementById(
       "mobileMenu"
     );
 
 
-  if (
-    !menuButton ||
-    !mobileMenu
-  ) {
+  if (!button || !menu) {
+
     return;
+
   }
 
 
-  menuButton.addEventListener(
+  button.addEventListener(
     "click",
     () => {
 
-      mobileMenu.classList.toggle(
+      menu.classList.toggle(
         "active"
       );
 
@@ -492,16 +1217,18 @@ function setupMobileMenu() {
 
 
   const links =
-    mobileMenu.querySelectorAll("a");
+    menu.querySelectorAll(
+      "a"
+    );
 
 
-  links.forEach((link) => {
+  links.forEach(link => {
 
     link.addEventListener(
       "click",
       () => {
 
-        mobileMenu.classList.remove(
+        menu.classList.remove(
           "active"
         );
 
@@ -513,11 +1240,11 @@ function setupMobileMenu() {
 }
 
 
-// ------------------------------------------
-// 9. CURRENT YEAR
-// ------------------------------------------
+/* ==================================================
+   26. YEAR
+================================================== */
 
-function setCurrentYear() {
+function setYear() {
 
   const year =
     document.getElementById(
@@ -535,20 +1262,104 @@ function setCurrentYear() {
 }
 
 
-// ------------------------------------------
-// 10. START WEBSITE
-// ------------------------------------------
+/* ==================================================
+   27. ESCAPE HTML
+================================================== */
+
+function escapeHtml(value) {
+
+  return String(value)
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* ==================================================
+   28. START WEBSITE
+================================================== */
+
+async function startWebsite() {
+
+  setYear();
+
+  setupMobileMenu();
+
+  setupSearch();
+
+  setupClearSearch();
+
+  setupModal();
+
+
+  if (!hasApiKey()) {
+
+    showError(
+      document.getElementById(
+        "trendingGrid"
+      ),
+      "Add your TMDB API key in app.js."
+    );
+
+
+    showError(
+      document.getElementById(
+        "popularGrid"
+      ),
+      "Add your TMDB API key in app.js."
+    );
+
+
+    showError(
+      document.getElementById(
+        "upcomingGrid"
+      ),
+      "Add your TMDB API key in app.js."
+    );
+
+
+    return;
+
+  }
+
+
+  /* ------------------------------------------
+     LOAD ALL MOVIE SECTIONS
+  ------------------------------------------ */
+
+  await Promise.all([
+    loadTrending(),
+    loadPopular(),
+    loadUpcoming()
+  ]);
+
+}
+
+
+/* ==================================================
+   RUN
+================================================== */
 
 document.addEventListener(
   "DOMContentLoaded",
-  () => {
-
-    displayTrendingMovies();
-
-    setupMobileMenu();
-
-    setCurrentYear();
-
-  }
+  startWebsite
 );
 ```
