@@ -1,64 +1,129 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>XYZMOVIEDAILY - Latest Movies & Trailers</title>
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <meta
     name="description"
-    content="XYZMOVIEDAILY - Discover trending movies, latest releases and official trailers."
+    content="XYZMOVIEDAILY - Discover trending movies, popular movies, upcoming releases and official trailers."
   >
 
+  <meta
+    name="theme-color"
+    content="#0b0b0f"
+  >
+
+  <title>XYZMOVIEDAILY | Movies & Official Trailers</title>
+
   <link rel="stylesheet" href="styles.css">
+
 </head>
+
 
 <body>
 
-  <!-- HEADER -->
+
+  <!-- =====================================
+       HEADER
+  ====================================== -->
+
   <header class="header">
+
     <div class="container header-inner">
 
-      <a href="#" class="logo">
+      <a
+        href="#home"
+        class="logo"
+      >
         XYZ<span>MOVIE</span>DAILY
       </a>
 
-      <nav class="nav">
-        <a href="#home">Home</a>
-        <a href="#trending">Trending</a>
-        <a href="#latest">Latest</a>
-        <a href="#about">About</a>
+
+      <nav class="desktop-nav">
+
+        <a href="#home">
+          Home
+        </a>
+
+        <a href="#trending">
+          Trending
+        </a>
+
+        <a href="#popular">
+          Popular
+        </a>
+
+        <a href="#upcoming">
+          Upcoming
+        </a>
+
       </nav>
 
-      <button class="menu-button" id="menuButton">
+
+      <button
+        class="menu-button"
+        id="menuButton"
+        aria-label="Open menu"
+      >
         ☰
       </button>
 
     </div>
+
   </header>
 
 
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#home">Home</a>
-    <a href="#trending">Trending</a>
-    <a href="#latest">Latest</a>
-    <a href="#about">About</a>
+  <!-- =====================================
+       MOBILE MENU
+  ====================================== -->
+
+  <div
+    class="mobile-menu"
+    id="mobileMenu"
+  >
+
+    <a href="#home">
+      Home
+    </a>
+
+    <a href="#trending">
+      Trending
+    </a>
+
+    <a href="#popular">
+      Popular
+    </a>
+
+    <a href="#upcoming">
+      Upcoming
+    </a>
+
   </div>
 
 
-  <!-- HERO -->
+  <!-- =====================================
+       HERO
+  ====================================== -->
+
   <main id="home">
 
     <section class="hero">
+
+      <div class="hero-background"></div>
 
       <div class="container hero-content">
 
         <div class="hero-text">
 
-          <p class="small-title">
+          <p class="hero-label">
             🎬 MOVIES • TRAILERS • ENTERTAINMENT
           </p>
 
@@ -68,13 +133,31 @@
           </h1>
 
           <p class="hero-description">
-            Stay updated with the latest movies, upcoming releases
-            and official trailers.
+            Explore trending movies, popular releases,
+            upcoming films and official trailers all in one place.
           </p>
 
-          <a href="#trending" class="hero-button">
-            Explore Movies
-          </a>
+
+          <!-- SEARCH -->
+
+          <form
+            class="search-form"
+            id="searchForm"
+          >
+
+            <input
+              type="search"
+              id="searchInput"
+              placeholder="Search for a movie..."
+              autocomplete="off"
+              aria-label="Search for a movie"
+            >
+
+            <button type="submit">
+              Search
+            </button>
+
+          </form>
 
         </div>
 
@@ -83,73 +166,250 @@
     </section>
 
 
-    <!-- TRENDING -->
-    <section class="movies-section" id="trending">
+    <!-- =====================================
+         SEARCH RESULTS
+    ====================================== -->
+
+    <section
+      class="movies-section search-section"
+      id="searchSection"
+      hidden
+    >
 
       <div class="container">
 
         <div class="section-heading">
 
           <div>
-            <p class="section-label">NOW TRENDING</p>
-            <h2>Trending Movies</h2>
+
+            <p class="section-label">
+              SEARCH RESULTS
+            </p>
+
+            <h2 id="searchTitle">
+              Movies
+            </h2>
+
           </div>
 
-          <span class="movie-count" id="movieCount">
-            0 Movies
+          <button
+            class="clear-search"
+            id="clearSearch"
+          >
+            Clear
+          </button>
+
+        </div>
+
+
+        <div
+          class="movie-grid"
+          id="searchGrid"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+         TRENDING
+    ====================================== -->
+
+    <section
+      class="movies-section"
+      id="trending"
+    >
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div>
+
+            <p class="section-label">
+              NOW TRENDING
+            </p>
+
+            <h2>
+              Trending Movies
+            </h2>
+
+          </div>
+
+          <span
+            class="movie-count"
+            id="trendingCount"
+          >
+            Loading...
           </span>
 
         </div>
 
-        <div class="movie-grid" id="movieGrid"></div>
+
+        <div
+          class="movie-grid"
+          id="trendingGrid"
+        >
+
+          <div class="loading-message">
+
+            <div class="loader"></div>
+
+            <p>
+              Loading trending movies...
+            </p>
+
+          </div>
+
+        </div>
 
       </div>
 
     </section>
 
 
-    <!-- LATEST -->
-    <section class="movies-section latest-section" id="latest">
+    <!-- =====================================
+         POPULAR
+    ====================================== -->
+
+    <section
+      class="movies-section dark-section"
+      id="popular"
+    >
 
       <div class="container">
 
         <div class="section-heading">
 
           <div>
-            <p class="section-label">LATEST UPDATES</p>
-            <h2>Latest Movies</h2>
+
+            <p class="section-label">
+              MOST POPULAR
+            </p>
+
+            <h2>
+              Popular Movies
+            </h2>
+
           </div>
+
+          <span
+            class="movie-count"
+            id="popularCount"
+          >
+            Loading...
+          </span>
 
         </div>
 
-        <div class="movie-grid" id="latestGrid"></div>
+
+        <div
+          class="movie-grid"
+          id="popularGrid"
+        >
+
+          <div class="loading-message">
+
+            <div class="loader"></div>
+
+            <p>
+              Loading popular movies...
+            </p>
+
+          </div>
+
+        </div>
 
       </div>
 
     </section>
 
 
-    <!-- ABOUT -->
-    <section class="about-section" id="about">
+    <!-- =====================================
+         UPCOMING
+    ====================================== -->
+
+    <section
+      class="movies-section"
+      id="upcoming"
+    >
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div>
+
+            <p class="section-label">
+              COMING SOON
+            </p>
+
+            <h2>
+              Upcoming Movies
+            </h2>
+
+          </div>
+
+          <span
+            class="movie-count"
+            id="upcomingCount"
+          >
+            Loading...
+          </span>
+
+        </div>
+
+
+        <div
+          class="movie-grid"
+          id="upcomingGrid"
+        >
+
+          <div class="loading-message">
+
+            <div class="loader"></div>
+
+            <p>
+              Loading upcoming movies...
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+         ABOUT
+    ====================================== -->
+
+    <section class="about-section">
 
       <div class="container">
 
         <div class="about-box">
 
-          <p class="section-label">ABOUT US</p>
+          <p class="section-label">
+            ABOUT XYZMOVIEDAILY
+          </p>
 
-          <h2>Welcome to XYZMOVIEDAILY</h2>
+          <h2>
+            Your Movie Discovery Destination
+          </h2>
 
           <p>
-            XYZMOVIEDAILY is a movie discovery website where you can
-            explore trending movies, upcoming releases and official
-            movie trailers.
+            XYZMOVIEDAILY helps you discover movies
+            that people are watching and talking about.
           </p>
 
           <p>
-            When you click "Watch Official Trailer", you will be
-            redirected to YouTube to watch the trailer from its
-            official source.
+            Movie information and posters are provided
+            through TMDB. Trailer buttons take you to
+            YouTube to watch available official trailers.
           </p>
 
         </div>
@@ -161,32 +421,156 @@
   </main>
 
 
-  <!-- FOOTER -->
+  <!-- =====================================
+       MOVIE DETAILS MODAL
+  ====================================== -->
+
+  <div
+    class="modal"
+    id="movieModal"
+    aria-hidden="true"
+  >
+
+    <div
+      class="modal-overlay"
+      id="modalOverlay"
+    ></div>
+
+
+    <div
+      class="modal-box"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalTitle"
+    >
+
+      <button
+        class="modal-close"
+        id="modalClose"
+        aria-label="Close movie details"
+      >
+        ×
+      </button>
+
+
+      <div class="modal-content">
+
+        <div class="modal-poster">
+
+          <img
+            id="modalPoster"
+            src=""
+            alt=""
+          >
+
+        </div>
+
+
+        <div class="modal-info">
+
+          <p
+            class="modal-label"
+            id="modalLabel"
+          >
+            MOVIE
+          </p>
+
+          <h2 id="modalTitle">
+            Movie Title
+          </h2>
+
+
+          <div
+            class="modal-meta"
+            id="modalMeta"
+          ></div>
+
+
+          <p
+            class="modal-overview"
+            id="modalOverview"
+          ></p>
+
+
+          <a
+            href="#"
+            id="modalTrailer"
+            class="modal-trailer-button"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ▶ Watch Official Trailer
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================
+       FOOTER
+  ====================================== -->
+
   <footer class="footer">
 
     <div class="container footer-inner">
 
       <div>
-        <a href="#" class="logo">
+
+        <a
+          href="#home"
+          class="logo"
+        >
           XYZ<span>MOVIE</span>DAILY
         </a>
 
         <p>
           Your daily movie discovery destination.
         </p>
+
       </div>
 
+
       <div class="footer-links">
-        <a href="#home">Home</a>
-        <a href="#trending">Trending</a>
-        <a href="#latest">Latest</a>
-        <a href="#about">About</a>
+
+        <a href="#home">
+          Home
+        </a>
+
+        <a href="#trending">
+          Trending
+        </a>
+
+        <a href="#popular">
+          Popular
+        </a>
+
+        <a href="#upcoming">
+          Upcoming
+        </a>
+
       </div>
 
     </div>
 
+
     <div class="copyright">
-      © <span id="year"></span> XYZMOVIEDAILY. All rights reserved.
+
+      © <span id="year"></span>
+      XYZMOVIEDAILY.
+      All rights reserved.
+
+    </div>
+
+
+    <div class="tmdb-credit">
+
+      This product uses the TMDB API but is not endorsed or certified by TMDB.
+
     </div>
 
   </footer>
@@ -195,5 +579,6 @@
   <script src="app.js"></script>
 
 </body>
+
 </html>
 ```
