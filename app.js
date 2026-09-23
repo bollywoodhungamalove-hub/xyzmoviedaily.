@@ -1,137 +1,237 @@
 ```javascript
 document.addEventListener("DOMContentLoaded", function () {
 
-  /* =========================
-     CURRENT YEAR
-  ========================= */
+  /* ==================================
+     MOVIE DATABASE
+  ================================== */
 
-  const year = document.getElementById("year");
+  const movies = [
 
-  if (year) {
-    year.textContent = new Date().getFullYear();
+    {
+      title: "Mirzapur: The Movie",
+      genre: "Action • Crime • Thriller",
+      image:
+        "https://newimages.qfxcinemas.com/S3/uploads/gallery/1782813261880-mirzapur_poster.jpg"
+    },
+
+    {
+      title: "Haiwaan",
+      genre: "Action • Thriller",
+      image:
+        "https://m.media-amazon.com/images/M/MV5BMDI3MDI3NmUtNjAwZS00OWU5LWI4ODEtMzMxMTI2OGRhZjQ5XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg"
+    },
+
+    {
+      title: "The Vvaan",
+      genre: "Fantasy • Action",
+      image:
+        "https://www.keralatv.in/media/2026/07/The-Vvan-Release-Date-941x941.jpg"
+    },
+
+    {
+      title: "Love & War",
+      genre: "Drama • Romance",
+      image:
+        "https://m.media-amazon.com/images/M/MV5BY2IwZmI5OTEtNjljMi00YWIxLWJkYWYtMTRiNTAzMDZjM2M0XkEyXkFqcGc%40._V1_.jpg"
+    }
+
+  ];
+
+
+  /* ==================================
+     ELEMENTS
+  ================================== */
+
+  const movieList =
+    document.getElementById("movieList");
+
+  const movieCount =
+    document.getElementById("movieCount");
+
+  const noResults =
+    document.getElementById("noResults");
+
+  const searchInput =
+    document.getElementById("searchInput");
+
+  const searchButton =
+    document.getElementById("searchButton");
+
+  const year =
+    document.getElementById("year");
+
+
+  /* ==================================
+     DISPLAY MOVIES
+  ================================== */
+
+  function displayMovies(movieData) {
+
+    movieList.innerHTML = "";
+
+
+    if (movieData.length === 0) {
+
+      noResults.hidden = false;
+
+      movieCount.textContent =
+        "0 Movies";
+
+      return;
+
+    }
+
+
+    noResults.hidden = true;
+
+
+    movieCount.textContent =
+      movieData.length +
+      (movieData.length === 1
+        ? " Movie"
+        : " Movies");
+
+
+    movieData.forEach(function (movie) {
+
+      const card =
+        document.createElement("article");
+
+      card.className =
+        "movie-card";
+
+
+      card.innerHTML = `
+
+        <img
+          src="${movie.image}"
+          alt="${movie.title}"
+          loading="lazy"
+        >
+
+        <div class="movie-card-content">
+
+          <h3>${movie.title}</h3>
+
+          <p>${movie.genre}</p>
+
+        </div>
+
+      `;
+
+
+      movieList.appendChild(card);
+
+    });
+
   }
 
 
-  /* =========================
-     MOVIE SEARCH
-  ========================= */
+  /* ==================================
+     SEARCH MOVIES
+  ================================== */
 
-  const searchInput = document.getElementById("searchInput");
-  const searchButton = document.getElementById("searchButton");
+  function searchMovies() {
 
-  const movieCards = document.querySelectorAll(".movie-card");
-  const newsCards = document.querySelectorAll(
-    ".main-news, .small-news, .review-card"
-  );
-
-
-  function performSearch() {
-
-    const searchText = searchInput.value
-      .trim()
-      .toLowerCase();
+    const searchText =
+      searchInput.value
+        .trim()
+        .toLowerCase();
 
 
     if (searchText === "") {
 
-      movieCards.forEach(function (card) {
-        card.style.display = "";
-      });
-
-      newsCards.forEach(function (card) {
-        card.style.display = "";
-      });
+      displayMovies(movies);
 
       return;
+
     }
 
 
-    movieCards.forEach(function (card) {
+    const results =
+      movies.filter(function (movie) {
 
-      const text = card.textContent.toLowerCase();
+        return (
+          movie.title
+            .toLowerCase()
+            .includes(searchText)
+          ||
+          movie.genre
+            .toLowerCase()
+            .includes(searchText)
+        );
 
-      if (text.includes(searchText)) {
-        card.style.display = "";
-      } else {
-        card.style.display = "none";
-      }
-
-    });
+      });
 
 
-    newsCards.forEach(function (card) {
-
-      const text = card.textContent.toLowerCase();
-
-      if (text.includes(searchText)) {
-        card.style.display = "";
-      } else {
-        card.style.display = "none";
-      }
-
-    });
+    displayMovies(results);
 
   }
 
 
-  /* Search button */
+  /* ==================================
+     SEARCH BUTTON
+  ================================== */
 
   if (searchButton) {
+
     searchButton.addEventListener(
       "click",
-      performSearch
+      searchMovies
     );
+
   }
 
 
-  /* Search while typing */
+  /* ==================================
+     LIVE SEARCH
+  ================================== */
 
   if (searchInput) {
+
     searchInput.addEventListener(
       "input",
-      performSearch
+      searchMovies
     );
+
 
     searchInput.addEventListener(
       "keydown",
       function (event) {
 
         if (event.key === "Enter") {
-          performSearch();
+
+          searchMovies();
+
         }
 
       }
     );
+
   }
 
 
-  /* =========================
-     MOVIE BUTTONS
-  ========================= */
+  /* ==================================
+     CURRENT YEAR
+  ================================== */
 
-  const movieButtons =
-    document.querySelectorAll(".primary-button");
+  if (year) {
 
+    year.textContent =
+      new Date().getFullYear();
 
-  movieButtons.forEach(function (button) {
-
-    button.addEventListener("click", function () {
-
-      alert(
-        "Movie details will be available soon on XYZMOVIEDAILY!"
-      );
-
-    });
-
-  });
+  }
 
 
-  /* =========================
-     CONSOLE MESSAGE
-  ========================= */
+  /* ==================================
+     INITIAL LOAD
+  ================================== */
+
+  displayMovies(movies);
+
 
   console.log(
-    "XYZMOVIEDAILY is running successfully!"
+    "XYZMOVIEDAILY loaded successfully."
   );
 
 });
