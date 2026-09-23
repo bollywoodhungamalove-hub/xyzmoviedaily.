@@ -5,332 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>XYZMOVIEDAILY</title>
-  <meta name="description" content="XYZMOVIEDAILY - Movies and entertainment">
 
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container header-content">
-
-      <a href="#" class="logo">
-        <span class="logo-x">X</span>
-        <span>XYZ<span class="logo-light">MOVIEDAILY</span></span>
-      </a>
-
-      <nav class="navigation">
-        <a href="#home" class="active">Home</a>
-        <a href="#movies">Movies</a>
-        <a href="#series">Series</a>
-        <a href="#genres">Genres</a>
-        <a href="#latest">Latest</a>
-      </nav>
-
-      <button class="menu-button" onclick="toggleMenu()">☰</button>
-
-    </div>
+  <header>
+    <h1>XYZMOVIEDAILY</h1>
   </header>
 
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Movies</a>
+    <a href="#">Reviews</a>
+    <a href="#">News</a>
+  </nav>
 
-  <!-- HERO -->
-  <section class="hero" id="home">
+  <main>
 
-    <div class="container hero-content">
+    <section class="hero">
+      <h2>Welcome to XYZMOVIEDAILY</h2>
+      <p>Your daily destination for movies, news and reviews.</p>
+    </section>
 
-      <div class="hero-text">
+    <section class="movie-grid">
 
-        <div class="small-title">
-          WELCOME TO XYZMOVIEDAILY
-        </div>
-
-        <h1>
-          Find something great
-          <span>to watch tonight.</span>
-        </h1>
-
-        <p>
-          Discover movies, series and entertainment in one place.
-          Browse our collection and choose something to watch.
-        </p>
-
-        <div class="hero-buttons">
-          <a href="#movies" class="button primary">
-            Browse Movies
-          </a>
-
-          <a href="#latest" class="button secondary">
-            Latest Movies
-          </a>
-        </div>
-
+      <div class="movie-card">
+        <img src="https://via.placeholder.com/300x400" alt="Movie poster">
+        <h3>Movie Title 1</h3>
+        <p>Latest movie information</p>
       </div>
 
-
-      <div class="featured-poster">
-
-        <div class="featured-label">
-          FEATURED
-        </div>
-
-        <div class="featured-title">
-          XYZ<br>
-          MOVIE<br>
-          DAILY
-        </div>
-
-        <div class="featured-bottom">
-          Featured movie
-        </div>
-
+      <div class="movie-card">
+        <img src="https://via.placeholder.com/300x400" alt="Movie poster">
+        <h3>Movie Title 2</h3>
+        <p>Latest movie information</p>
       </div>
 
-    </div>
-
-  </section>
-
-
-  <!-- ANNOUNCEMENT -->
-  <div class="announcement">
-
-    <div class="container announcement-content">
-
-      <span class="announcement-dot"></span>
-
-      <strong>XYZMOVIEDAILY</strong>
-
-      <span>
-        New movies and entertainment added regularly.
-      </span>
-
-    </div>
-
-  </div>
-
-
-  <!-- LATEST -->
-  <section class="section" id="latest">
-
-    <div class="container">
-
-      <div class="section-header">
-
-        <div>
-          <div class="section-label">
-            CURATED FOR YOU
-          </div>
-
-          <h2>Latest Movies</h2>
-        </div>
-
-        <div class="search-box">
-
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Search movies..."
-          >
-
-        </div>
-
+      <div class="movie-card">
+        <img src="https://via.placeholder.com/300x400" alt="Movie poster">
+        <h3>Movie Title 3</h3>
+        <p>Latest movie information</p>
       </div>
 
+    </section>
 
-      <div id="movieGrid" class="movie-grid"></div>
+  </main>
 
-      <div id="noResults" class="no-results">
-        No movies found.
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- MOVIES -->
-  <section class="section dark-section" id="movies">
-
-    <div class="container">
-
-      <div class="section-header">
-
-        <div>
-          <div class="section-label">
-            EXPLORE
-          </div>
-
-          <h2>Movies</h2>
-        </div>
-
-      </div>
-
-      <div id="movieGrid2" class="movie-grid"></div>
-
-    </div>
-
-  </section>
-
-
-  <!-- SERIES -->
-  <section class="section" id="series">
-
-    <div class="container series-section">
-
-      <div>
-
-        <div class="section-label">
-          SERIES
-        </div>
-
-        <h2>Shows & Series</h2>
-
-        <p>
-          Browse your favorite shows and series from
-          XYZMOVIEDAILY.
-        </p>
-
-      </div>
-
-      <div class="info-card">
-
-        <strong>XYZMOVIEDAILY</strong>
-
-        <p>
-          Your entertainment collection in one place.
-        </p>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- GENRES -->
-  <section class="section dark-section" id="genres">
-
-    <div class="container">
-
-      <div class="section-label">
-        BROWSE BY GENRE
-      </div>
-
-      <h2>Genres</h2>
-
-      <div class="genre-list">
-
-        <button onclick="filterGenre('Action')">
-          Action
-        </button>
-
-        <button onclick="filterGenre('Comedy')">
-          Comedy
-        </button>
-
-        <button onclick="filterGenre('Drama')">
-          Drama
-        </button>
-
-        <button onclick="filterGenre('Thriller')">
-          Thriller
-        </button>
-
-        <button onclick="filterGenre('Romance')">
-          Romance
-        </button>
-
-        <button onclick="filterGenre('Family')">
-          Family
-        </button>
-
-        <button onclick="filterGenre('Animation')">
-          Animation
-        </button>
-
-        <button onclick="filterGenre('Sci-Fi')">
-          Sci-Fi
-        </button>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- FOOTER -->
   <footer>
-
-    <div class="container footer-content">
-
-      <div>
-
-        <div class="footer-logo">
-          <span class="logo-x">X</span>
-          XYZMOVIEDAILY
-        </div>
-
-        <p>
-          Movies and entertainment.
-        </p>
-
-      </div>
-
-      <div class="footer-links">
-
-        <a href="#home">Home</a>
-        <a href="#movies">Movies</a>
-        <a href="#genres">Genres</a>
-
-      </div>
-
-    </div>
-
+    <p>© <span id="year"></span> XYZMOVIEDAILY. All rights reserved.</p>
   </footer>
-
-
-  <!-- MOVIE MODAL -->
-  <div id="movieModal" class="modal">
-
-    <div class="modal-background" onclick="closeModal()"></div>
-
-    <div class="modal-box">
-
-      <button
-        class="close-button"
-        onclick="closeModal()">
-        ×
-      </button>
-
-      <div id="modalPoster" class="modal-poster"></div>
-
-      <div class="modal-content">
-
-        <div id="modalGenre" class="section-label"></div>
-
-        <h2 id="modalTitle"></h2>
-
-        <p id="modalInfo"></p>
-
-        <p id="modalDescription"></p>
-
-        <a
-          id="watchButton"
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button primary watch-button">
-          Watch Online ↗
-        </a>
-
-      </div>
-
-    </div>
-
-  </div>
-
 
   <script src="app.js"></script>
 
