@@ -1,10 +1,14 @@
 ```javascript
 /* =========================================================
    XYZMOVIEDAILY
-   No TMDB / No API Key version
+   Simple version - NO TMDB API
    ========================================================= */
 
+
+/* ================= MOVIE DATA ================= */
+
 const movies = [
+
   {
     title: "Dhurandhar",
     year: "2025",
@@ -13,7 +17,7 @@ const movies = [
     poster:
       "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=600&q=80",
     description:
-      "A high-energy action thriller with suspense, drama and powerful performances.",
+      "An action thriller filled with suspense, drama and powerful characters.",
     trailer:
       "https://www.youtube.com/results?search_query=Dhurandhar+official+trailer"
   },
@@ -26,7 +30,7 @@ const movies = [
     poster:
       "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=600&q=80",
     description:
-      "An action-packed spy thriller featuring high-stakes missions and intense combat.",
+      "An action-packed spy adventure featuring missions, combat and high-stakes drama.",
     trailer:
       "https://www.youtube.com/results?search_query=War+2+official+trailer"
   },
@@ -39,7 +43,7 @@ const movies = [
     poster:
       "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=600&q=80",
     description:
-      "A stylish action drama built around a powerful character and an explosive story.",
+      "A stylish action drama packed with powerful characters and explosive moments.",
     trailer:
       "https://www.youtube.com/results?search_query=Coolie+official+trailer"
   },
@@ -52,20 +56,20 @@ const movies = [
     poster:
       "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=600&q=80",
     description:
-      "A comedy entertainer filled with confusion, characters, twists and fun.",
+      "A comedy entertainer filled with characters, confusion, twists and fun.",
     trailer:
       "https://www.youtube.com/results?search_query=Housefull+5+official+trailer"
   },
 
   {
-    title: "Avatar: Fire and Ash",
+    title: "Avatar Fire and Ash",
     year: "2025",
     genre: "Adventure • Sci-Fi",
     rating: "8.7",
     poster:
       "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80",
     description:
-      "A new chapter in the Avatar universe with spectacular worlds and adventure.",
+      "A new adventure in the Avatar universe featuring spectacular worlds and action.",
     trailer:
       "https://www.youtube.com/results?search_query=Avatar+Fire+and+Ash+official+trailer"
   },
@@ -78,13 +82,13 @@ const movies = [
     poster:
       "https://images.unsplash.com/photo-1534801022022-6e5a8f7f5b4f?auto=format&fit=crop&w=600&q=80",
     description:
-      "A superhero adventure following Superman as he balances his heroic mission and humanity.",
+      "A superhero adventure following Superman as he protects his world.",
     trailer:
       "https://www.youtube.com/results?search_query=Superman+2025+official+trailer"
   },
 
   {
-    title: "Fantastic Four",
+    title: "The Fantastic Four",
     year: "2025",
     genre: "Action • Sci-Fi",
     rating: "8.0",
@@ -104,55 +108,92 @@ const movies = [
     poster:
       "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=600&q=80",
     description:
-      "A dangerous mission pushes an elite team to the limits.",
+      "An elite team faces a dangerous mission with impossible odds.",
     trailer:
       "https://www.youtube.com/results?search_query=Mission+Impossible+2025+official+trailer"
   }
+
 ];
 
 
-/* =========================================================
-   ELEMENTS
-   ========================================================= */
+/* ================= ELEMENTS ================= */
 
-const trendingGrid = document.getElementById("trendingGrid");
-const popularGrid = document.getElementById("popularGrid");
-const upcomingGrid = document.getElementById("upcomingGrid");
+const trendingGrid =
+  document.getElementById("trendingGrid");
 
-const searchForm = document.getElementById("searchForm");
-const searchInput = document.getElementById("searchInput");
-const searchSection = document.getElementById("searchSection");
-const searchGrid = document.getElementById("searchGrid");
-const searchTitle = document.getElementById("searchTitle");
-const clearSearch = document.getElementById("clearSearch");
+const popularGrid =
+  document.getElementById("popularGrid");
 
-const movieModal = document.getElementById("movieModal");
-const modalOverlay = document.getElementById("modalOverlay");
-const modalClose = document.getElementById("modalClose");
-const modalPoster = document.getElementById("modalPoster");
-const modalTitle = document.getElementById("modalTitle");
-const modalLabel = document.getElementById("modalLabel");
-const modalMeta = document.getElementById("modalMeta");
-const modalOverview = document.getElementById("modalOverview");
-const modalTrailer = document.getElementById("modalTrailer");
+const upcomingGrid =
+  document.getElementById("upcomingGrid");
 
-const mobileMenuButton = document.getElementById("mobileMenuButton");
-const mobileMenu = document.getElementById("mobileMenu");
-const yearElement = document.getElementById("year");
+const searchForm =
+  document.getElementById("searchForm");
+
+const searchInput =
+  document.getElementById("searchInput");
+
+const searchSection =
+  document.getElementById("searchSection");
+
+const searchGrid =
+  document.getElementById("searchGrid");
+
+const searchTitle =
+  document.getElementById("searchTitle");
+
+const clearSearch =
+  document.getElementById("clearSearch");
+
+const mobileMenuButton =
+  document.getElementById("mobileMenuButton");
+
+const mobileMenu =
+  document.getElementById("mobileMenu");
+
+const year =
+  document.getElementById("year");
+
+const movieModal =
+  document.getElementById("movieModal");
+
+const modalOverlay =
+  document.getElementById("modalOverlay");
+
+const modalClose =
+  document.getElementById("modalClose");
+
+const modalPoster =
+  document.getElementById("modalPoster");
+
+const modalTitle =
+  document.getElementById("modalTitle");
+
+const modalLabel =
+  document.getElementById("modalLabel");
+
+const modalMeta =
+  document.getElementById("modalMeta");
+
+const modalOverview =
+  document.getElementById("modalOverview");
+
+const modalTrailer =
+  document.getElementById("modalTrailer");
 
 
-/* =========================================================
-   CREATE MOVIE CARD
-   ========================================================= */
+/* ================= MOVIE CARD ================= */
 
 function createMovieCard(movie, number = "") {
+
   return `
+
     <article class="movie-card">
 
       <button
         class="movie-poster-button"
-        onclick="openTrailer('${escapeAttribute(movie.trailer)}')"
-        aria-label="Watch ${escapeAttribute(movie.title)} trailer"
+        data-movie="${escapeAttribute(movie.title)}"
+        aria-label="Open ${escapeAttribute(movie.title)}"
       >
 
         <div class="movie-poster-wrapper">
@@ -162,7 +203,7 @@ function createMovieCard(movie, number = "") {
             src="${movie.poster}"
             alt="${escapeAttribute(movie.title)} poster"
             loading="lazy"
-            onerror="this.src='https://placehold.co/600x900?text=No+Poster'"
+            onerror="this.src='https://placehold.co/600x900/18181f/ffffff?text=Movie'"
           >
 
           ${
@@ -179,6 +220,7 @@ function createMovieCard(movie, number = "") {
 
       </button>
 
+
       <div class="movie-info">
 
         <h3 class="movie-title">
@@ -186,9 +228,9 @@ function createMovieCard(movie, number = "") {
         </h3>
 
         <div class="movie-meta">
-          <span>${movie.year}</span>
+          <span>${escapeHtml(movie.year)}</span>
           <span>•</span>
-          <span>⭐ ${movie.rating}</span>
+          <span>⭐ ${escapeHtml(movie.rating)}</span>
         </div>
 
         <p class="movie-genre">
@@ -197,7 +239,7 @@ function createMovieCard(movie, number = "") {
 
         <button
           class="trailer-button"
-          onclick="openTrailer('${escapeAttribute(movie.trailer)}')"
+          data-trailer="${escapeAttribute(movie.trailer)}"
         >
           ▶ Watch Trailer
         </button>
@@ -205,142 +247,103 @@ function createMovieCard(movie, number = "") {
       </div>
 
     </article>
+
   `;
 }
 
 
-/* =========================================================
-   DISPLAY MOVIES
-   ========================================================= */
+/* ================= DISPLAY MOVIES ================= */
 
-function displayMovies(list, container, numbered = false) {
+function displayMovies(
+  movieList,
+  container,
+  numbered = false
+) {
+
   if (!container) return;
 
-  if (!list.length) {
-    container.innerHTML = `
-      <div class="empty-message">
-        <h3>No movies found</h3>
-        <p>Try another movie name.</p>
-      </div>
-    `;
-    return;
-  }
+  container.innerHTML = movieList
+    .map((movie, index) => {
 
-  container.innerHTML = list
-    .map((movie, index) =>
-      createMovieCard(movie, numbered ? index + 1 : "")
-    )
+      const number =
+        numbered
+          ? index + 1
+          : "";
+
+      return createMovieCard(
+        movie,
+        number
+      );
+
+    })
     .join("");
+
+
+  setupMovieButtons(container);
 }
 
 
-/* =========================================================
-   LOAD HOME PAGE
-   ========================================================= */
+/* ================= MOVIE BUTTONS ================= */
 
-function loadHomeMovies() {
+function setupMovieButtons(container) {
 
-  // Trending
-  displayMovies(
-    movies.slice(0, 6),
-    trendingGrid,
-    true
-  );
-
-  // Popular
-  displayMovies(
-    movies.slice(2, 8),
-    popularGrid,
-    false
-  );
-
-  // Upcoming
-  displayMovies(
-    movies.slice(4, 8),
-    upcomingGrid,
-    false
-  );
-}
+  const posterButtons =
+    container.querySelectorAll(
+      ".movie-poster-button"
+    );
 
 
-/* =========================================================
-   SEARCH
-   ========================================================= */
+  posterButtons.forEach(button => {
 
-function searchMovies(query) {
+    button.addEventListener(
+      "click",
+      function() {
 
-  const cleanQuery = query.trim().toLowerCase();
+        const movieTitle =
+          button.dataset.movie;
 
-  if (!cleanQuery) {
-    searchSection.hidden = true;
-    return;
-  }
+        const movie =
+          movies.find(
+            item =>
+              item.title === movieTitle
+          );
 
-  const results = movies.filter(movie =>
-    movie.title.toLowerCase().includes(cleanQuery) ||
-    movie.genre.toLowerCase().includes(cleanQuery)
-  );
+        if (movie) {
+          openMovieModal(movie);
+        }
 
-  searchSection.hidden = false;
+      }
+    );
 
-  searchTitle.textContent =
-    `Search results for "${query.trim()}"`;
-
-  displayMovies(
-    results,
-    searchGrid,
-    false
-  );
-
-  searchSection.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
   });
-}
 
 
-/* =========================================================
-   SEARCH FORM
-   ========================================================= */
+  const trailerButtons =
+    container.querySelectorAll(
+      ".trailer-button"
+    );
 
-if (searchForm) {
 
-  searchForm.addEventListener("submit", function(event) {
+  trailerButtons.forEach(button => {
 
-    event.preventDefault();
+    button.addEventListener(
+      "click",
+      function() {
 
-    searchMovies(searchInput.value);
+        const url =
+          button.dataset.trailer;
+
+        openTrailer(url);
+
+      }
+    );
 
   });
 
 }
 
 
-/* =========================================================
-   CLEAR SEARCH
-   ========================================================= */
-
-if (clearSearch) {
-
-  clearSearch.addEventListener("click", function() {
-
-    searchInput.value = "";
-
-    searchSection.hidden = true;
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-
-  });
-
-}
-
-
-/* =========================================================
-   OPEN OFFICIAL TRAILER SEARCH
-   ========================================================= */
+/* ================= TRAILER ================= */
 
 function openTrailer(url) {
 
@@ -355,53 +358,247 @@ function openTrailer(url) {
 }
 
 
-/* =========================================================
-   MOVIE MODAL
-   ========================================================= */
+/* ================= HOME MOVIES ================= */
+
+function loadMovies() {
+
+  displayMovies(
+    movies.slice(0, 6),
+    trendingGrid,
+    true
+  );
+
+
+  displayMovies(
+    movies.slice(2, 8),
+    popularGrid,
+    false
+  );
+
+
+  displayMovies(
+    movies.slice(4, 8),
+    upcomingGrid,
+    false
+  );
+
+
+  updateCounts();
+
+}
+
+
+/* ================= COUNTS ================= */
+
+function updateCounts() {
+
+  const trendingCount =
+    document.getElementById(
+      "trendingCount"
+    );
+
+  const popularCount =
+    document.getElementById(
+      "popularCount"
+    );
+
+  const upcomingCount =
+    document.getElementById(
+      "upcomingCount"
+    );
+
+
+  if (trendingCount) {
+    trendingCount.textContent =
+      `${Math.min(6, movies.length)} Movies`;
+  }
+
+
+  if (popularCount) {
+    popularCount.textContent =
+      `${Math.min(6, movies.length)} Movies`;
+  }
+
+
+  if (upcomingCount) {
+    upcomingCount.textContent =
+      `${Math.min(4, movies.length)} Movies`;
+  }
+
+}
+
+
+/* ================= SEARCH ================= */
+
+function searchMovies(query) {
+
+  const cleanQuery =
+    query.trim().toLowerCase();
+
+
+  if (!cleanQuery) {
+
+    searchSection.hidden = true;
+
+    return;
+
+  }
+
+
+  const results =
+    movies.filter(movie => {
+
+      return (
+        movie.title
+          .toLowerCase()
+          .includes(cleanQuery)
+        ||
+        movie.genre
+          .toLowerCase()
+          .includes(cleanQuery)
+      );
+
+    });
+
+
+  searchSection.hidden = false;
+
+
+  searchTitle.textContent =
+    `Results for "${query.trim()}"`;
+
+
+  displayMovies(
+    results,
+    searchGrid,
+    false
+  );
+
+
+  searchSection.scrollIntoView({
+    behavior: "smooth"
+  });
+
+}
+
+
+/* ================= SEARCH FORM ================= */
+
+if (searchForm) {
+
+  searchForm.addEventListener(
+    "submit",
+    function(event) {
+
+      event.preventDefault();
+
+      searchMovies(
+        searchInput.value
+      );
+
+    }
+  );
+
+}
+
+
+/* ================= CLEAR SEARCH ================= */
+
+if (clearSearch) {
+
+  clearSearch.addEventListener(
+    "click",
+    function() {
+
+      searchInput.value = "";
+
+      searchSection.hidden = true;
+
+    }
+  );
+
+}
+
+
+/* ================= MODAL ================= */
 
 function openMovieModal(movie) {
 
   if (!movieModal) return;
 
-  modalPoster.src = movie.poster;
-  modalPoster.alt = `${movie.title} poster`;
 
-  modalTitle.textContent = movie.title;
+  modalPoster.src =
+    movie.poster;
 
-  modalLabel.textContent = movie.genre;
+  modalPoster.alt =
+    `${movie.title} poster`;
+
+
+  modalTitle.textContent =
+    movie.title;
+
+
+  modalLabel.textContent =
+    movie.genre;
+
 
   modalMeta.innerHTML = `
-    <span>${movie.year}</span>
+    <span>${escapeHtml(movie.year)}</span>
     <span>•</span>
-    <span>⭐ ${movie.rating}</span>
+    <span>⭐ ${escapeHtml(movie.rating)}</span>
   `;
+
 
   modalOverview.textContent =
     movie.description;
 
+
   modalTrailer.href =
     movie.trailer;
 
-  movieModal.classList.add("active");
 
-  document.body.style.overflow = "hidden";
+  movieModal.classList.add(
+    "active"
+  );
+
+
+  movieModal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+
+  document.body.style.overflow =
+    "hidden";
+
 }
 
+
+/* ================= CLOSE MODAL ================= */
 
 function closeMovieModal() {
 
   if (!movieModal) return;
 
-  movieModal.classList.remove("active");
 
-  document.body.style.overflow = "";
+  movieModal.classList.remove(
+    "active"
+  );
+
+
+  movieModal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+
+  document.body.style.overflow =
+    "";
 
 }
 
 
-/* =========================================================
-   MODAL EVENTS
-   ========================================================= */
+/* ================= MODAL EVENTS ================= */
 
 if (modalClose) {
 
@@ -428,24 +625,29 @@ document.addEventListener(
   function(event) {
 
     if (event.key === "Escape") {
+
       closeMovieModal();
+
     }
 
   }
 );
 
 
-/* =========================================================
-   MOBILE MENU
-   ========================================================= */
+/* ================= MOBILE MENU ================= */
 
-if (mobileMenuButton && mobileMenu) {
+if (
+  mobileMenuButton &&
+  mobileMenu
+) {
 
   mobileMenuButton.addEventListener(
     "click",
     function() {
 
-      mobileMenu.classList.toggle("active");
+      mobileMenu.classList.toggle(
+        "active"
+      );
 
     }
   );
@@ -453,48 +655,67 @@ if (mobileMenuButton && mobileMenu) {
 }
 
 
-document.querySelectorAll(
-  ".mobile-menu a"
-).forEach(link => {
+/* Close mobile menu after clicking link */
 
-  link.addEventListener(
-    "click",
-    function() {
+if (mobileMenu) {
 
-      if (mobileMenu) {
-        mobileMenu.classList.remove("active");
+  const menuLinks =
+    mobileMenu.querySelectorAll("a");
+
+
+  menuLinks.forEach(link => {
+
+    link.addEventListener(
+      "click",
+      function() {
+
+        mobileMenu.classList.remove(
+          "active"
+        );
+
       }
+    );
 
-    }
-  );
+  });
 
-});
+}
 
 
-/* =========================================================
-   CURRENT YEAR
-   ========================================================= */
+/* ================= YEAR ================= */
 
-if (yearElement) {
+if (year) {
 
-  yearElement.textContent =
+  year.textContent =
     new Date().getFullYear();
 
 }
 
 
-/* =========================================================
-   HTML SECURITY
-   ========================================================= */
+/* ================= SECURITY ================= */
 
 function escapeHtml(value) {
 
   return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
@@ -502,15 +723,19 @@ function escapeHtml(value) {
 function escapeAttribute(value) {
 
   return String(value)
-    .replace(/'/g, "\\'")
-    .replace(/"/g, "&quot;");
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
 
-/* =========================================================
-   START WEBSITE
-   ========================================================= */
+/* ================= START ================= */
 
-loadHomeMovies();
+loadMovies();
 ```
