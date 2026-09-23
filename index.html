@@ -3,249 +3,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <meta
-    name="description"
-    content="XYZMOVIEDAILY - Latest movies, trending films and official trailers."
-  >
-
-  <title>XYZMOVIEDAILY | Movies & Trailers</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XYZMOVIEDAILY</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-  <!-- ================= HEADER ================= -->
-
-  <header class="header">
-
-    <div class="container nav-container">
-
-      <a href="#home" class="logo">
-        XYZ<span>MOVIE</span>DAILY
-      </a>
-
-      <nav class="desktop-nav">
-        <a href="#home">Home</a>
-        <a href="#trending">Trending</a>
-        <a href="#popular">Popular</a>
-        <a href="#upcoming">Upcoming</a>
-        <a href="#about">About</a>
-      </nav>
-
-      <button
-        id="mobileMenuButton"
-        class="menu-button"
-        aria-label="Open menu"
-      >
-        ☰
-      </button>
-
-    </div>
-
-    <div id="mobileMenu" class="mobile-menu">
-
-      <a href="#home">Home</a>
-      <a href="#trending">Trending</a>
-      <a href="#popular">Popular</a>
-      <a href="#upcoming">Upcoming</a>
-      <a href="#about">About</a>
-
-    </div>
-
+  <header>
+    <h1>XYZMOVIEDAILY</h1>
+    <p>Movie Website</p>
   </header>
 
+  <main>
 
-  <main id="home">
+    <section class="movies">
 
-    <!-- ================= HERO ================= -->
+      <article class="movie-card">
 
-    <section class="hero">
+        <img
+          src="https://placehold.co/600x900/111111/ffffff?text=Movie+Poster"
+          alt="Movie Poster"
+        >
 
-      <div class="hero-content container">
+        <h2>Test Movie</h2>
 
-        <p class="hero-small">
-          WELCOME TO
-        </p>
+        <p>2025 • Action</p>
 
-        <h1>
-          XYZ<span>MOVIE</span>DAILY
-        </h1>
+        <a
+          href="https://www.youtube.com/results?search_query=official+movie+trailer"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ▶ Watch Trailer
+        </a>
 
-        <p class="hero-text">
-          Discover movies, trending films and official trailers.
-        </p>
-
-        <form id="searchForm" class="search-form">
-
-          <input
-            id="searchInput"
-            type="search"
-            placeholder="Search for a movie..."
-            autocomplete="off"
-          >
-
-          <button type="submit">
-            Search
-          </button>
-
-        </form>
-
-      </div>
+      </article>
 
     </section>
 
+  </main>
 
-    <!-- ================= SEARCH ================= -->
+  <footer>
+    <p>© 2026 XYZMOVIEDAILY</p>
+  </footer>
 
-    <section
-      id="searchSection"
-      class="movie-section search-section"
-      hidden
-    >
-
-      <div class="container">
-
-        <div class="section-heading">
-
-          <div>
-            <p class="section-label">SEARCH</p>
-            <h2 id="searchTitle">Search Results</h2>
-          </div>
-
-          <button
-            id="clearSearch"
-            class="clear-button"
-          >
-            Clear
-          </button>
-
-        </div>
-
-        <div
-          id="searchGrid"
-          class="movie-grid"
-        ></div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= TRENDING ================= -->
-
-    <section
-      id="trending"
-      class="movie-section"
-    >
-
-      <div class="container">
-
-        <div class="section-heading">
-
-          <div>
-            <p class="section-label">NOW WATCHING</p>
-            <h2>Trending Movies</h2>
-          </div>
-
-          <span id="trendingCount" class="movie-count">
-            6 Movies
-          </span>
-
-        </div>
-
-        <div
-          id="trendingGrid"
-          class="movie-grid"
-        ></div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= POPULAR ================= -->
-
-    <section
-      id="popular"
-      class="movie-section dark-section"
-    >
-
-      <div class="container">
-
-        <div class="section-heading">
-
-          <div>
-            <p class="section-label">TOP PICKS</p>
-            <h2>Popular Movies</h2>
-          </div>
-
-          <span id="popularCount" class="movie-count">
-            6 Movies
-          </span>
-
-        </div>
-
-        <div
-          id="popularGrid"
-          class="movie-grid"
-        ></div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= UPCOMING ================= -->
-
-    <section
-      id="upcoming"
-      class="movie-section"
-    >
-
-      <div class="container">
-
-        <div class="section-heading">
-
-          <div>
-            <p class="section-label">COMING SOON</p>
-            <h2>Upcoming Movies</h2>
-          </div>
-
-          <span id="upcomingCount" class="movie-count">
-            6 Movies
-          </span>
-
-        </div>
-
-        <div
-          id="upcomingGrid"
-          class="movie-grid"
-        ></div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= ABOUT ================= -->
-
-    <section
-      id="about"
-      class="about-section"
-    >
-
-      <div class="container about-box">
-
-        <p class="section-label">ABOUT US</p>
-
-        <h2>
-          Welcome to XYZMOVIEDAILY
-        </h2>
+</body>
+</html>
 ```
