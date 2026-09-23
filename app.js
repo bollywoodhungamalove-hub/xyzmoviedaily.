@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
 
   const movies = [
+    { title: "Dhurandhar", year: "2026", genre: "Action / Thriller", image: "https://image.tmdb.org/t/p/w500/placeholder.jpg", trailer: "https://www.youtube.com/results?search_query=Dhurandhar+official+trailer" 
+    
+    },
+    { title: "Border 2", year: "2026", genre: "War / Drama", image: "https://image.tmdb.org/t/p/w500/placeholder.jpg", trailer: "https://www.youtube.com/results?search_query=Border+2+official+trailer" 
+    }, 
+    { title: "Ramayana", year: "2026", genre: "Mythology / Drama", image: "https://image.tmdb.org/t/p/w500/placeholder.jpg", trailer: "https://www.youtube.com/results?search_query=Ramayana+official+trailer" 
+    }, 
+    { title: "War 2", year: "2025", genre: "Action / Thriller", image: "https://image.tmdb.org/t/p/w500/placeholder.jpg", trailer: "https://www.youtube.com/results?search_query=War+2+official+trailer" } ]
     {
       title: "Mirzapur: The Movie",
       genre: "Action • Crime • Thriller",
