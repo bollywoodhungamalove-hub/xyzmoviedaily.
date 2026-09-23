@@ -1,167 +1,308 @@
 ```javascript
-/* ==========================================
-   XYZMOVIEDAILY
-   Movie Data
-========================================== */
+// ==========================================
+// XYZMOVIEDAILY
+// AUTOMATIC TMDB TRENDING MOVIES
+// ==========================================
 
-const trendingMovies = [
 
-  {
-    title: "Avatar",
-    year: "2009",
-    genre: "Sci-Fi / Adventure",
-    image:
-      "https://upload.wikimedia.org/wikipedia/en/b/b0/Avatar-Teaser-Poster.jpg",
-    trailer:
-      "https://www.youtube.com/results?search_query=Avatar+official+trailer"
-  },
+// ------------------------------------------
+// 1. PUT YOUR TMDB API KEY HERE
+// ------------------------------------------
 
-  {
-    title: "Inception",
-    year: "2010",
-    genre: "Sci-Fi / Thriller",
-    image:
-      "https://upload.wikimedia.org/wikipedia/en/7/7f/Inception_ver3.jpg",
-    trailer:
-      "https://www.youtube.com/results?search_query=Inception+official+trailer"
-  },
+const TMDB_API_KEY = "PASTE_YOUR_TMDB_API_KEY_HERE";
 
-  {
-    title: "Interstellar",
-    year: "2014",
-    genre: "Sci-Fi / Drama",
-    image:
-      "https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg",
-    trailer:
-      "https://www.youtube.com/results?search_query=Interstellar+official+trailer"
-  },
 
-  {
-    title: "The Dark Knight",
-    year: "2008",
-    genre: "Action / Crime",
-    image:
-      "https://upload.wikimedia.org/wikipedia/en/8/8a/Dark_Knight.jpg",
-    trailer:
-      "https://www.youtube.com/results?search_query=The+Dark+Knight+official+trailer"
-  },
+// ------------------------------------------
+// 2. TMDB SETTINGS
+// ------------------------------------------
 
-  {
-    title: "Oppenheimer",
-    year: "2023",
-    genre: "Drama / History",
-    image:
-      "https://upload.wikimedia.org/wikipedia/en/4/4a/Oppenheimer_%28film%29.jpg",
-    trailer:
-      "https://www.youtube.com/results?search_query=Oppenheimer+official+trailer"
-  },
+const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
-  {
-    title: "Dune",
-    year: "2021",
-    genre: "Sci-Fi / Adventure",
-    image:
-      "https://upload.wikimedia.org/wikipedia/en/8/8c/Dune_%282021%29.jpg",
-    trailer:
-      "https://www.youtube.com/results?search_query=Dune+official+trailer"
-  },
+const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-  {
-    title: "Avengers: Endgame",
-    year: "2019",
-    genre: "Action / Adventure",
-    image:
-      "https://upload.wikimedia.org/wikipedia/en/0/0d/Avengers_Endgame_poster.jpg",
-    trailer:
-      "https://www.youtube.com/results?search_query=Avengers+Endgame+official+trailer"
-  },
 
-  {
-    title: "Joker",
-    year: "2019",
-    genre: "Crime / Drama",
-    image:
-      "https://upload.wikimedia.org/wikipedia/en/e/e1/Joker_%282019_film%29_poster.jpg",
-    trailer:
-      "https://www.youtube.com/results?search_query=Joker+2019+official+trailer"
+// ------------------------------------------
+// 3. GET TRENDING MOVIES
+// ------------------------------------------
+
+async function getTrendingMovies() {
+
+  const url =
+    `${TMDB_BASE_URL}/trending/movie/week` +
+    `?api_key=${TMDB_API_KEY}` +
+    `&language=en-US`;
+
+  try {
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(
+        `TMDB error: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+
+    return data.results || [];
+
+  } catch (error) {
+
+    console.error(
+      "Could not load TMDB movies:",
+      error
+    );
+
+    return [];
+
+  }
+}
+
+
+// ------------------------------------------
+// 4. GET MOVIE TRAILER
+// ------------------------------------------
+
+async function getMovieTrailer(movieId) {
+
+  const url =
+    `${TMDB_BASE_URL}/movie/${movieId}/videos` +
+    `?api_key=${TMDB_API_KEY}` +
+    `&language=en-US`;
+
+  try {
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+
+    const videos = data.results || [];
+
+
+    // First look for an official YouTube trailer
+
+    let trailer = videos.find((video) => {
+
+      return (
+        video.site === "YouTube" &&
+        video.type === "Trailer" &&
+        video.official === true
+      );
+
+    });
+
+
+    // If no official trailer exists,
+    // look for any YouTube trailer
+
+    if (!trailer) {
+
+      trailer = videos.find((video) => {
+
+        return (
+          video.site === "YouTube" &&
+          video.type === "Trailer"
+        );
+
+      });
+
+    }
+
+
+    // If still nothing, look for a teaser
+
+    if (!trailer) {
+
+      trailer = videos.find((video) => {
+
+        return (
+          video.site === "YouTube" &&
+          video.type === "Teaser"
+        );
+
+      });
+
+    }
+
+
+    if (!trailer) {
+      return null;
+    }
+
+
+    return `https://www.youtube.com/watch?v=${trailer.key}`;
+
+  } catch (error) {
+
+    console.error(
+      "Trailer error:",
+      error
+    );
+
+    return null;
+
+  }
+}
+
+
+// ------------------------------------------
+// 5. GET GENRE NAME
+// ------------------------------------------
+
+const genreNames = {
+
+  28: "Action",
+  12: "Adventure",
+  16: "Animation",
+  35: "Comedy",
+  80: "Crime",
+  99: "Documentary",
+  18: "Drama",
+  10751: "Family",
+  14: "Fantasy",
+  36: "History",
+  27: "Horror",
+  10402: "Music",
+  9648: "Mystery",
+  10749: "Romance",
+  878: "Sci-Fi",
+  10770: "TV Movie",
+  53: "Thriller",
+  10752: "War",
+  37: "Western"
+
+};
+
+
+function getGenres(movie) {
+
+  if (
+    !movie.genre_ids ||
+    movie.genre_ids.length === 0
+  ) {
+
+    return "Movie";
+
   }
 
-];
+
+  return movie.genre_ids
+    .slice(0, 2)
+    .map(
+      (id) => genreNames[id] || "Movie"
+    )
+    .join(" / ");
+
+}
 
 
-const latestMovies = [
+// ------------------------------------------
+// 6. CREATE MOVIE CARD
+// ------------------------------------------
 
-  {
-    title: "Avatar: The Way of Water",
-    year: "2022",
-    genre: "Sci-Fi / Adventure",
-    image:
-      "https://upload.wikimedia.org/wikipedia/en/5/5a/Avatar_The_Way_of_Water_poster.jpg",
-    trailer:
-      "https://www.youtube.com/results?search_query=Avatar+The+Way+of+Water+official+trailer"
-  },
+async function createMovieCard(
+  movie,
+  index
+) {
 
-  {
-    title: "Top Gun: Maverick",
-    year: "2022",
-    genre: "Action / Drama",
-    image:
-      "https://upload.wikimedia.org/wikipedia/en/1/13/Top_Gun_Maverick_Poster.jpg",
-    trailer:
-      "https://www.youtube.com/results?search_query=Top+Gun+Maverick+official+trailer"
-  },
-
-  {
-    title: "John Wick",
-    year: "2014",
-    genre: "Action / Thriller",
-    image:
-      "https://upload.wikimedia.org/wikipedia/en/9/98/John_Wick_TeaserPoster.jpg",
-    trailer:
-      "https://www.youtube.com/results?search_query=John+Wick+official+trailer"
-  },
-
-  {
-    title: "Spider-Man: No Way Home",
-    year: "2021",
-    genre: "Action / Adventure",
-    image:
-      "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg",
-    trailer:
-      "https://www.youtube.com/results?search_query=Spider-Man+No+Way+Home+official+trailer"
-  }
-
-];
-
-
-/* ==========================================
-   CREATE MOVIE CARD
-========================================== */
-
-function createMovieCard(movie, trending = false) {
-
-  const card = document.createElement("article");
+  const card =
+    document.createElement("article");
 
   card.className = "movie-card";
+
+
+  // Poster
+
+  let poster;
+
+  if (movie.poster_path) {
+
+    poster =
+      IMAGE_BASE_URL +
+      movie.poster_path;
+
+  } else {
+
+    poster =
+      "https://placehold.co/500x750/18181f/ffffff?text=No+Poster";
+
+  }
+
+
+  // Trailer
+
+  const trailer =
+    await getMovieTrailer(movie.id);
+
+
+  let trailerButton;
+
+
+  if (trailer) {
+
+    trailerButton = `
+
+      <a
+        class="trailer-button"
+        href="${trailer}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ▶ Watch Official Trailer
+      </a>
+
+    `;
+
+  } else {
+
+    // If TMDB has no trailer,
+    // search YouTube instead.
+
+    const searchText =
+      encodeURIComponent(
+        `${movie.title} official trailer`
+      );
+
+    trailerButton = `
+
+      <a
+        class="trailer-button"
+        href="https://www.youtube.com/results?search_query=${searchText}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ▶ Find Official Trailer
+      </a>
+
+    `;
+
+  }
+
 
   card.innerHTML = `
 
     <div class="poster-wrapper">
 
       <img
-        src="${movie.image}"
+        src="${poster}"
         alt="${movie.title} poster"
         loading="lazy"
-        onerror="this.onerror=null; this.src='https://placehold.co/500x750/18181f/ffffff?text=Poster+Unavailable';"
       >
 
       ${
-        trending
-          ? `<span class="trending-badge">TRENDING</span>`
+        index < 5
+          ? `<span class="trending-badge">
+               #${index + 1} TRENDING
+             </span>`
           : ""
       }
 
     </div>
+
 
     <div class="movie-info">
 
@@ -169,106 +310,185 @@ function createMovieCard(movie, trending = false) {
         ${movie.title}
       </h3>
 
+
       <p class="movie-meta">
-        ${movie.year} • ${movie.genre}
+
+        ${
+          movie.release_date
+            ? movie.release_date.substring(0, 4)
+            : "Coming Soon"
+        }
+
+        •
+
+        ${getGenres(movie)}
+
       </p>
 
-      <a
-        class="trailer-button"
-        href="${movie.trailer}"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        ▶ Watch Official Trailer
-      </a>
+
+      ${trailerButton}
 
     </div>
 
   `;
 
+
   return card;
+
 }
 
 
-/* ==========================================
-   DISPLAY MOVIES
-========================================== */
+// ------------------------------------------
+// 7. DISPLAY TRENDING MOVIES
+// ------------------------------------------
 
-function displayMovies() {
+async function displayTrendingMovies() {
 
   const movieGrid =
-    document.getElementById("movieGrid");
-
-  const latestGrid =
-    document.getElementById("latestGrid");
+    document.getElementById(
+      "movieGrid"
+    );
 
   const movieCount =
-    document.getElementById("movieCount");
+    document.getElementById(
+      "movieCount"
+    );
 
 
-  if (movieGrid) {
-
-    movieGrid.innerHTML = "";
-
-    trendingMovies.forEach((movie) => {
-
-      movieGrid.appendChild(
-        createMovieCard(movie, true)
-      );
-
-    });
-
-  }
-
-
-  if (latestGrid) {
-
-    latestGrid.innerHTML = "";
-
-    latestMovies.forEach((movie) => {
-
-      latestGrid.appendChild(
-        createMovieCard(movie, false)
-      );
-
-    });
-
-  }
-
-
-  if (movieCount) {
-
-    movieCount.textContent =
-      `${trendingMovies.length} Movies`;
-
-  }
-
-}
-
-
-/* ==========================================
-   MOBILE MENU
-========================================== */
-
-function setupMobileMenu() {
-
-  const menuButton =
-    document.getElementById("menuButton");
-
-  const mobileMenu =
-    document.getElementById("mobileMenu");
-
-
-  if (!menuButton || !mobileMenu) {
+  if (!movieGrid) {
     return;
   }
 
 
-  menuButton.addEventListener("click", () => {
+  // Loading message
 
-    mobileMenu.classList.toggle("active");
+  movieGrid.innerHTML = `
 
-  });
+    <div class="loading-message">
+
+      <div class="loader"></div>
+
+      <p>
+        Loading trending movies...
+      </p>
+
+    </div>
+
+  `;
+
+
+  const movies =
+    await getTrendingMovies();
+
+
+  // No movies
+
+  if (!movies.length) {
+
+    movieGrid.innerHTML = `
+
+      <div class="error-message">
+
+        <h3>
+          Unable to load movies
+        </h3>
+
+        <p>
+          Please check your TMDB API key
+          and refresh the page.
+        </p>
+
+      </div>
+
+    `;
+
+    if (movieCount) {
+      movieCount.textContent =
+        "0 Movies";
+    }
+
+    return;
+
+  }
+
+
+  // Clear loading
+
+  movieGrid.innerHTML = "";
+
+
+  // Show first 12 movies
+
+  const selectedMovies =
+    movies.slice(0, 12);
+
+
+  // Create cards
+
+  for (
+    let i = 0;
+    i < selectedMovies.length;
+    i++
+  ) {
+
+    const card =
+      await createMovieCard(
+        selectedMovies[i],
+        i
+      );
+
+    movieGrid.appendChild(card);
+
+  }
+
+
+  // Update count
+
+  if (movieCount) {
+
+    movieCount.textContent =
+      `${selectedMovies.length} Movies`;
+
+  }
+
+}
+
+
+// ------------------------------------------
+// 8. MOBILE MENU
+// ------------------------------------------
+
+function setupMobileMenu() {
+
+  const menuButton =
+    document.getElementById(
+      "menuButton"
+    );
+
+  const mobileMenu =
+    document.getElementById(
+      "mobileMenu"
+    );
+
+
+  if (
+    !menuButton ||
+    !mobileMenu
+  ) {
+    return;
+  }
+
+
+  menuButton.addEventListener(
+    "click",
+    () => {
+
+      mobileMenu.classList.toggle(
+        "active"
+      );
+
+    }
+  );
 
 
   const links =
@@ -277,25 +497,33 @@ function setupMobileMenu() {
 
   links.forEach((link) => {
 
-    link.addEventListener("click", () => {
+    link.addEventListener(
+      "click",
+      () => {
 
-      mobileMenu.classList.remove("active");
+        mobileMenu.classList.remove(
+          "active"
+        );
 
-    });
+      }
+    );
 
   });
 
 }
 
 
-/* ==========================================
-   CURRENT YEAR
-========================================== */
+// ------------------------------------------
+// 9. CURRENT YEAR
+// ------------------------------------------
 
 function setCurrentYear() {
 
   const year =
-    document.getElementById("year");
+    document.getElementById(
+      "year"
+    );
+
 
   if (year) {
 
@@ -307,15 +535,15 @@ function setCurrentYear() {
 }
 
 
-/* ==========================================
-   START WEBSITE
-========================================== */
+// ------------------------------------------
+// 10. START WEBSITE
+// ------------------------------------------
 
 document.addEventListener(
   "DOMContentLoaded",
   () => {
 
-    displayMovies();
+    displayTrendingMovies();
 
     setupMobileMenu();
 
