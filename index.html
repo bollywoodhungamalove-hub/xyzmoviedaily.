@@ -1,63 +1,223 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>XYZMOVIEDAILY</title>
+  <title>XYZMOVIEDAILY - Latest Movies, News & Reviews</title>
+
+  <meta
+    name="description"
+    content="XYZMOVIEDAILY - Latest Bollywood movies, movie news, reviews and entertainment updates."
+  >
 
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
+  <!-- HEADER -->
   <header>
     <h1>XYZMOVIEDAILY</h1>
+    <p>Movies • News • Reviews • Entertainment</p>
   </header>
 
+
+  <!-- NAVIGATION -->
   <nav>
     <a href="#">Home</a>
     <a href="#">Movies</a>
+    <a href="#">Bollywood</a>
     <a href="#">Reviews</a>
     <a href="#">News</a>
   </nav>
 
+
+  <!-- MAIN CONTENT -->
   <main>
 
+    <!-- HERO -->
     <section class="hero">
-      <h2>Welcome to XYZMOVIEDAILY</h2>
-      <p>Your daily destination for movies, news and reviews.</p>
+      <h2>Trending Movies</h2>
+
+      <p>
+        Discover the latest movies, upcoming releases,
+        Bollywood news and entertainment updates.
+      </p>
     </section>
 
-    <section class="movie-grid">
 
-      <div class="movie-card">
-        <img src="https://via.placeholder.com/300x400" alt="Movie poster">
-        <h3>Movie Title 1</h3>
-        <p>Latest movie information</p>
+    <!-- MOVIE SECTION -->
+    <section>
+
+      <h2>🔥 Trending Now</h2>
+
+      <div class="movie-grid">
+
+        <!-- MOVIE 1 -->
+        <div class="movie-card">
+
+          <img
+            src="https://newimages.qfxcinemas.com/S3/uploads/gallery/1782813261880-mirzapur_poster.jpg"
+            alt="Mirzapur The Movie poster"
+          >
+
+          <div class="movie-info">
+            <h3>Mirzapur: The Movie</h3>
+
+            <p>
+              Action • Crime • Thriller
+            </p>
+
+            <button>View Movie</button>
+          </div>
+
+        </div>
+
+
+        <!-- MOVIE 2 -->
+        <div class="movie-card">
+
+          <img
+            src="https://m.media-amazon.com/images/M/MV5BMDI3MDI3NmUtNjAwZS00OWU5LWI4ODEtMzMxMTI2OGRhZjQ5XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg"
+            alt="Haiwaan movie poster"
+          >
+
+          <div class="movie-info">
+            <h3>Haiwaan</h3>
+
+            <p>
+              Action • Thriller
+            </p>
+
+            <button>View Movie</button>
+          </div>
+
+        </div>
+
+
+        <!-- MOVIE 3 -->
+        <div class="movie-card">
+
+          <img
+            src="https://www.keralatv.in/media/2026/07/The-Vvan-Release-Date-941x941.jpg"
+            alt="The Vvaan Force of the Forest poster"
+          >
+
+          <div class="movie-info">
+            <h3>The Vvaan</h3>
+
+            <p>
+              Fantasy • Action
+            </p>
+
+            <button>View Movie</button>
+          </div>
+
+        </div>
+
+
+        <!-- MOVIE 4 -->
+        <div class="movie-card">
+
+          <img
+            src="https://m.media-amazon.com/images/M/MV5BY2IwZmI5OTEtNjlkMi00YWIxLWJkYWYtMTRiNTAzMDZjM2M0XkEyXkFqcGc%40._V1_.jpg"
+            alt="Love and War movie poster"
+          >
+
+          <div class="movie-info">
+            <h3>Love & War</h3>
+
+            <p>
+              Drama • Romance
+            </p>
+
+            <button>View Movie</button>
+          </div>
+
+        </div>
+
       </div>
 
-      <div class="movie-card">
-        <img src="https://via.placeholder.com/300x400" alt="Movie poster">
-        <h3>Movie Title 2</h3>
-        <p>Latest movie information</p>
-      </div>
+    </section>
 
-      <div class="movie-card">
-        <img src="https://via.placeholder.com/300x400" alt="Movie poster">
-        <h3>Movie Title 3</h3>
-        <p>Latest movie information</p>
+
+    <!-- LATEST NEWS -->
+    <section class="news-section">
+
+      <h2>📰 Latest Movie News</h2>
+
+      <div class="news-grid">
+
+        <article class="news-card">
+
+          <h3>Latest Bollywood Updates</h3>
+
+          <p>
+            Get the latest updates about upcoming Bollywood
+            movies and entertainment.
+          </p>
+
+          <a href="#">Read More →</a>
+
+        </article>
+
+
+        <article class="news-card">
+
+          <h3>Upcoming Movies</h3>
+
+          <p>
+            Check out upcoming movies and their latest
+            release information.
+          </p>
+
+          <a href="#">Read More →</a>
+
+        </article>
+
+
+        <article class="news-card">
+
+          <h3>Movie Reviews</h3>
+
+          <p>
+            Read movie reviews and discover what audiences
+            are talking about.
+          </p>
+
+          <a href="#">Read More →</a>
+
+        </article>
+
       </div>
 
     </section>
 
   </main>
 
+
+  <!-- FOOTER -->
   <footer>
-    <p>© <span id="year"></span> XYZMOVIEDAILY. All rights reserved.</p>
+
+    <h3>XYZMOVIEDAILY</h3>
+
+    <p>
+      Movies • News • Reviews • Entertainment
+    </p>
+
+    <p>
+      © <span id="year"></span> XYZMOVIEDAILY.
+      All rights reserved.
+    </p>
+
   </footer>
 
+
+  <!-- JAVASCRIPT -->
   <script src="app.js"></script>
 
 </body>
 </html>
+```
